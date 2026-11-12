@@ -36,5 +36,5 @@ button{width:100%;margin-top:12px;padding:14px;border:none;border-radius:12px;ba
 let n=0;
 function a(){let v=document.getElementById('u').value.toLowerCase();let r=document.getElementById('r');if(!v){alert('Colle un lien !');return} n++;document.getElementById('t').innerText=n;r.style.display='block';if(v.includes('free')||v.includes('cadeau')||v.includes('gagner')||v.includes('bit.ly')||v.includes('verify')){r.style.background='#3a0a0a';r.innerHTML='⛔ DANGEREUX - Ne clique PAS ! Ressemble à du phishing.'}else if(v.includes('google')||v.includes('facebook')||v.includes('youtube')){r.style.background='#0a2e1a';r.innerHTML='✅ Probablement SUR - Site connu.'}else{r.style.background='#2e220a';r.innerHTML='⚠️ ATTENTION - Site inconnu. Ne mets pas ton mot de passe.'}}
 </script>
-</body>
+<script>if("serviceWorker" in navigator){navigator.serviceWorker.register("sw.js")}</script></body>
 </html>
