@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SOC KINSHASA</title>
+<style>
+body{background:#050807;color:#fff;font-family:Arial;margin:0;text-align:center}
+.h{background:linear-gradient(135deg,#00ff88,#00b894);padding:22px;color:#000}
+.h h1{margin:0;font-size:28px;letter-spacing:2px}
+.box{max-width:520px;margin:20px auto;background:#0f1a16;border:1px solid #00ff88;border-radius:20px;padding:20px}
+input{width:100%;padding:14px;border-radius:12px;border:1px solid #333;background:#000;color:#fff;font-size:15px}
+button{width:100%;margin-top:12px;padding:14px;border:none;border-radius:12px;background:#00ff88;font-weight:800;font-size:16px}
+#r{margin-top:15px;padding:15px;border-radius:12px;display:none}
+.card{display:inline-block;background:#111a17;border:1px solid #222;border-radius:15px;padding:12px 20px;margin:5px}
+</style>
+</head>
+<body>
+<div class="h"><h1>🛡️ SOC KINSHASA</h1><p>Mini SOC Défenseur - 100% Défensif</p></div>
+<div class="card"><b id="t">0</b><br>Analyses</div>
+<div class="card"><b>Kinshasa 🇨🇩</b><br>En ligne</div>
+<div class="box">
+<h2>Analyse un lien suspect</h2>
+<p style="color:#bbb;font-size:13px">Colle un lien avant de cliquer.</p>
+<input id="u" placeholder="Ex: https://google.com">
+<button onclick="a()">🔍 ANALYSER</button>
+<div id="r"></div>
+</div>
+<div class="box" style="border-color:#333">
+<b>🚨 Signes de phishing</b><p style="color:#bbb;font-size:13px;line-height:1.8">• Cadeau gratuit / gagner<br>• On te demande mot de passe urgent<br>• Lien bizarre bit.ly<br>• Faute dans le nom du site</p>
+</div>
+<p style="color:#666;font-size:12px">Créé à Kinshasa par Emmanuel</p>
+<script>
+let n=0;
+function a(){let v=document.getElementById('u').value.toLowerCase();let r=document.getElementById('r');if(!v){alert('Colle un lien !');return} n++;document.getElementById('t').innerText=n;r.style.display='block';if(v.includes('free')||v.includes('cadeau')||v.includes('gagner')||v.includes('bit.ly')||v.includes('verify')){r.style.background='#3a0a0a';r.innerHTML='⛔ DANGEREUX - Ne clique PAS ! Ressemble à du phishing.'}else if(v.includes('google')||v.includes('facebook')||v.includes('youtube')){r.style.background='#0a2e1a';r.innerHTML='✅ Probablement SUR - Site connu.'}else{r.style.background='#2e220a';r.innerHTML='⚠️ ATTENTION - Site inconnu. Ne mets pas ton mot de passe.'}}
+</script>
+</body>
+</html>
