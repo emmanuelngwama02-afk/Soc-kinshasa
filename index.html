@@ -6,39 +6,55 @@
 <title>SOC KINSHASA</title>
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
-body{font-family:Arial,sans-serif;background:white;min-height:100vh;display:flex;flex-direction:column}
-header{background:#22242a;color:white;padding:16px;text-align:center;font-size:22px;font-weight:bold;letter-spacing:1px}
-header small{display:block;font-size:13px;font-weight:normal;color:#ccc;margin-top:4px}
-main{flex:1;padding:20px;text-align:center}
-main h2{font-size:19px;margin-bottom:8px}
-main p{color:#555;font-size:14px;margin-bottom:15px}
-input{width:92%;max-width:420px;padding:14px;font-size:16px;border-radius:10px;border:2px solid #22242a;outline:none}
-button{margin-top:12px;padding:14px 28px;font-size:18px;background:#22242a;color:white;border:none;border-radius:10px}
-#protect-bar{width:92%;max-width:420px;height:28px;background:#eee;border-radius:20px;overflow:hidden;margin:16px auto;display:none}
-#protect-fill{height:100%;width:0%;background:#00c853;color:white;font-weight:bold;line-height:28px;font-size:14px;transition:width 0.5s}
-#protect-raisons{background:#f7f7f7;padding:12px;border-radius:10px;max-width:420px;margin:10px auto;text-align:left;display:none;color:#111;font-size:14px}
-footer{background:#00e676;height:42px;width:100%}
+body{font-family:Arial,sans-serif;background:#0a0a0a;color:white;min-height:100vh;display:flex;flex-direction:column}
+header{background:linear-gradient(135deg,#00e676,#00c853);color:#000;padding:20px 15px;text-align:center}
+header h1{font-size:28px;letter-spacing:2px}
+header p{font-size:15px;margin-top:6px}
+.stats{display:flex;justify-content:center;gap:12px;margin:14px 0}
+.stat{background:#1a1a1a;border-radius:14px;padding:12px 20px;text-align:center;min-width:110px}
+.stat b{display:block;font-size:18px}
+.stat span{font-size:14px;color:#ccc}
+.card{background:#12211a;border:1px solid #00e676;border-radius:20px;padding:22px 16px;margin:0 16px;text-align:center}
+.card h2{font-size:23px;margin-bottom:8px}
+.card p{color:#aaa;font-size:14px;margin-bottom:16px}
+input{width:100%;padding:14px;border-radius:10px;border:none;background:#000;color:white;font-size:15px;outline:none}
+button{width:100%;margin-top:14px;padding:14px;background:#00e676;color:#000;border:none;border-radius:10px;font-size:17px;font-weight:bold}
+#protect-bar{width:100%;height:30px;background:#000;border-radius:20px;overflow:hidden;margin:16px 0 0;display:none;border:1px solid #333}
+#protect-fill{height:100%;width:0%;background:#00c853;color:white;font-weight:bold;line-height:30px;font-size:14px;transition:width .5s}
+#protect-raisons{background:#000;padding:12px;border-radius:10px;margin-top:10px;text-align:left;display:none;font-size:14px;line-height:1.6}
+.card2{background:#1a1a1a;border-radius:20px;padding:18px;margin:16px;text-align:center}
+.card2 h3{font-size:17px;margin-bottom:10px}
+.card2 p{color:#aaa;font-size:14px;line-height:1.9}
+footer{margin-top:auto;text-align:center;color:#666;font-size:13px;padding:12px 0 0}
+.bottom{height:14px;background:#00e676;margin-top:10px}
 </style>
 </head>
 <body>
-<header>SOC KINSHASA<small>🛡️ EMMANUEL PROTECT - Vérifie avant de cliquer</small></header>
-<main>
-<h2>Colle un lien, on te dit si c'est vrai ou faux</h2>
-<p>Protège Kinshasa contre les arnaques</p>
-<input id="lien" type="text" placeholder="Colle le lien ici...">
-<br>
-<button onclick="verifier()">VÉRIFIER</button>
+<header><h1>🛡️ SOC KINSHASA</h1><p>Mini SOC Défenseur - 100% Défensif</p></header>
+<div class="stats">
+<div class="stat"><b id="count">0</b><span>Analyses</span></div>
+<div class="stat"><b>Kinshasa 🇨🇩</b><span>En ligne</span></div>
+</div>
+<div class="card">
+<h2>Analyse un lien suspect</h2>
+<p>Colle un lien avant de cliquer.</p>
+<input id="lien" type="text" placeholder="Ex: https://google.com">
+<button onclick="verifier()">🔍 ANALYSER</button>
 <div id="protect-bar"><div id="protect-fill">0%</div></div>
 <div id="protect-raisons"></div>
-</main>
-<footer></footer>
+</div>
+<div class="card2">
+<h3>🚨 Signes de phishing</h3>
+<p>• Cadeau gratuit / gagner<br>• On te demande mot de passe urgent<br>• Lien bizarre bit.ly<br>• Faute dans le nom du site</p>
+</div>
+<footer>Créé à Kinshasa par Emmanuel</footer>
+<div class="bottom"></div>
 <script>
-let audioCtx=null;
+let audioCtx=null, total=0;
 function bip(f,t,d,quand){try{if(!audioCtx)audioCtx=new(window.AudioContext||window.webkitAudioContext)();if(audioCtx.state==='suspended')audioCtx.resume();const tm=audioCtx.currentTime+quand;const o=audioCtx.createOscillator();const g=audioCtx.createGain();o.connect(g);g.connect(audioCtx.destination);o.frequency.value=f;o.type=t;g.gain.setValueAtTime(0.12,tm);g.gain.exponentialRampToValueAtTime(0.001,tm+d);o.start(tm);o.stop(tm+d);}catch(e){}}
 function sonDanger(){bip(220,'square',0.25,0);bip(180,'square',0.3,0.35);}
 function sonBon(){bip(700,'sine',0.4,0);}
-
-// --- ANCIENS PARAMETRES D'AVANT, CEUX QUI MARCHAIENT ---
+// ANCIENS PARAMETRES QUI MARCHAIENT
 function analyser(url){
   url=url.toLowerCase().trim();
   let score=100; let raisons=[];
@@ -55,6 +71,7 @@ function verifier(){
   const url=document.getElementById('lien').value;
   if(!url){alert('Colle d’abord un lien !');return;}
   const res=analyser(url);
+  total++; document.getElementById('count').textContent=total;
   const bar=document.getElementById('protect-bar');
   const fill=document.getElementById('protect-fill');
   const zone=document.getElementById('protect-raisons');
@@ -62,11 +79,9 @@ function verifier(){
   fill.style.width=res.score+'%';
   fill.textContent=res.score+'% '+(res.score>=60?'VRAI ✅':'FAUX ❌');
   fill.style.background=res.score>=60?'#00c853':'#d50000';
-  document.body.style.background=res.score>=60?'#00c853':'#d50000';
+  zone.innerHTML='<b>Analyse:</b><br>'+res.raisons.join('<br>')+'<br><br><b>Score: '+res.score+'%</b>';
   if(res.score>=60){sonBon();}
   else{sonDanger(); if(navigator.vibrate) navigator.vibrate([200,100,200]);}
-  zone.innerHTML='<b>Analyse:</b><br>'+res.raisons.join('<br>')+'<br><br><b>Score: '+res.score+'%</b>';
-  setTimeout(()=>{document.body.style.background='white';},3000);
 }
 </script>
 </body>
