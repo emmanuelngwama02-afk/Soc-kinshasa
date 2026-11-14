@@ -54,17 +54,18 @@ let audioCtx=null, total=0;
 function bip(f,t,d,quand){try{if(!audioCtx)audioCtx=new(window.AudioContext||window.webkitAudioContext)();if(audioCtx.state==='suspended')audioCtx.resume();const tm=audioCtx.currentTime+quand;const o=audioCtx.createOscillator();const g=audioCtx.createGain();o.connect(g);g.connect(audioCtx.destination);o.frequency.value=f;o.type=t;g.gain.setValueAtTime(0.12,tm);g.gain.exponentialRampToValueAtTime(0.001,tm+d);o.start(tm);o.stop(tm+d);}catch(e){}}
 function sonDanger(){bip(220,'square',0.25,0);bip(180,'square',0.3,0.35);}
 function sonBon(){bip(700,'sine',0.4,0);}
-// ANCIENS PARAMETRES QUI MARCHAIENT
+// NOUVEAUX PARAMETRES PLUS SEVERES - UN FAUX SITE TOMBE A 0-15%
 function analyser(url){
   url=url.toLowerCase().trim();
   let score=100; let raisons=[];
-  if(!url.startsWith('https://')){score-=25;raisons.push('❌ Pas de HTTPS');}
-  if(url.includes('bit.ly')||url.includes('tinyurl')){score-=30;raisons.push('❌ Lien raccourci suspect');}
-  if(url.includes('free')||url.includes('gratuit')||url.includes('gagner')||url.includes('cadeau')){score-=25;raisons.push('❌ Mot arnaque');}
-  if(url.includes('login')||url.includes('verify')){score-=20;raisons.push('❌ Faux login');}
-  if(url.includes('facebook.com')||url.includes('google.com')){score+=10;raisons.push('✅ Domaine connu');}
-  if(raisons.length===0) raisons.push('✅ Aucun signal suspect');
+  if(!url.startsWith('https://')){score-=40;raisons.push('❌ Pas de HTTPS - très dangereux');}
+  if(url.includes('bit.ly')||url.includes('tinyurl')||url.includes('t.me')||url.includes('cutt.ly')){score-=50;raisons.push('❌ Lien raccourci suspect');}
+  if(url.includes('free')||url.includes('gratuit')||url.includes('gagner')||url.includes('cadeau')||url.includes('cadeaux')||url.includes('bonus')||url.includes('argent')){score-=50;raisons.push('❌ Mot arnaque : cadeau / gagner / gratuit');}
+  if(url.includes('login')||url.includes('verify')||url.includes('verifie')||url.includes('password')||url.includes('mot-de-passe')){score-=40;raisons.push('❌ Faux login / demande mot de passe');}
+  if(url.includes('urgent')||url.includes('urgent-')||url.includes('compte-bloque')||url.includes('bloque')){score-=40;raisons.push('❌ Urgence - technique d’arnaque');}
+  if(url.includes('facebook.com')||url.includes('google.com')||url.includes('whatsapp.com')||url.includes('youtube.com')){score=100;raisons=['✅ Domaine officiel connu'];}
   if(score>100) score=100; if(score<0) score=0;
+  if(raisons.length===0) raisons.push('✅ Aucun signal suspect');
   return {score:score, raisons:raisons};
 }
 function verifier(){
@@ -79,7 +80,7 @@ function verifier(){
   fill.style.width=res.score+'%';
   fill.textContent=res.score+'% '+(res.score>=60?'VRAI ✅':'FAUX ❌');
   fill.style.background=res.score>=60?'#00c853':'#d50000';
-  zone.innerHTML='<b>Analyse:</b><br>'+res.raisons.join('<br>')+'<br><br><b>Score: '+res.score+'%</b>';
+  zone.innerHTML='<b>Analyse:</b><br>'+res.raisons.join('<br>')+'<br><br><b>Score: '+res.score+'% - '+(res.score>=60?'VRAI ✅':'FAUX ❌ - NE CLIQUE PAS')+'</b>';
   if(res.score>=60){sonBon();}
   else{sonDanger(); if(navigator.vibrate) navigator.vibrate([200,100,200]);}
 }
