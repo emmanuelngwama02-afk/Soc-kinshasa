@@ -66,7 +66,15 @@ function note(freq, type, duree, quand, vol=0.15){
 }
 function sonBon(){note(523.25,'sine',0.25,0,0.18);note(659.25,'sine',0.25,0.15,0.18);note(783.99,'sine',0.25,0.30,0.18);note(1046.50,'sine',0.5,0.45,0.20);}
 function sonDanger(){note(400,'sawtooth',0.3,0,0.12);note(300,'sawtooth',0.3,0.25,0.12);note(200,'sawtooth',0.5,0.50,0.14);note(400,'sawtooth',0.3,0.90,0.12);note(200,'sawtooth',0.5,1.15,0.14);}
-// REGLE DURE : 1 SEUL SIGNAL ROUGE = FAUX DIRECT, ON NE PEUT PLUS MONTER A 75%
+// VOIX QUI PARLE EN FRANCAIS
+function parler(texte){
+  try{
+    window.speechSynthesis.cancel();
+    const u=new SpeechSynthesisUtterance(texte);
+    u.lang='fr-FR'; u.rate=1; u.pitch=1; u.volume=1;
+    window.speechSynthesis.speak(u);
+  }catch(e){}
+}
 function analyser(url){
   url=url.toLowerCase().trim();
   let score=100; let raisons=[]; let danger=false;
@@ -74,7 +82,7 @@ function analyser(url){
   for(let d of connus){ if(url.includes(d)){ return {score:100, raisons:['✅ Domaine officiel connu']}; } }
   if(!url.startsWith('https://')){score-=40;raisons.push('❌ Pas de HTTPS - très dangereux'); danger=true;}
   if(url.includes('bit.ly')||url.includes('tinyurl')||url.includes('t.me')||url.includes('cutt.ly')){score=10;raisons.push('❌ Lien raccourci suspect - FAUX'); danger=true;}
-  if(url.includes('free')||url.includes('gratuit')||url.includes('gagner')||url.includes('cadeau')||url.includes('cadeaux')||url.includes('bonus')||url.includes('argent')||url.includes('iphone-gratuit')){score=Math.min(score,15);raisons.push('❌ Mot arnaque : cadeau / gagner / gratuit = FAUX'); danger=true;}
+  if(url.includes('free')||url.includes('gratuit')||url.includes('gagner')||url.includes('cadeau')||url.includes('cadeaux')||url.includes('bonus')||url.includes('argent')){score=Math.min(score,15);raisons.push('❌ Mot arnaque : cadeau / gagner / gratuit = FAUX'); danger=true;}
   if(url.includes('login')||url.includes('verify')||url.includes('verifie')||url.includes('password')||url.includes('mot-de-passe')){score=Math.min(score,20);raisons.push('❌ Faux login / demande mot de passe'); danger=true;}
   if(url.includes('urgent')||url.includes('compte-bloque')||url.includes('bloque')||url.includes('suspendu')){score=Math.min(score,20);raisons.push('❌ Urgence - technique d’arnaque'); danger=true;}
   if(danger && score>30) score=15;
@@ -94,9 +102,15 @@ function verifier(){
   fill.style.width=res.score+'%';
   fill.textContent=res.score+'% '+(res.score>=60?'VRAI ✅':'FAUX ❌');
   fill.style.background=res.score>=60?'#00c853':'#d50000';
-  zone.innerHTML='<b>Analyse:</b><br>'+res.raisons.join('<br>')+'<br><br><b>Score: '+res.score+'% - '+(res.score>=60?'VRAI ✅':'FAUX ❌ - NE CLIQUE PAS')+'</b>';
-  if(res.score>=60){sonBon();}
-  else{sonDanger(); if(navigator.vibrate) navigator.vibrate([300,100,300,100,300]);}
+  if(res.score>=60){
+    zone.innerHTML='<b>Analyse:</b><br>'+res.raisons.join('<br>')+'<br><br><b>✅ Oui, c’est un site certifié. Vous pouvez continuer.</b>';
+    sonBon();
+    setTimeout(()=>parler('Oui, c’est un site certifié. Vous pouvez continuer.'),600);
+  } else {
+    zone.innerHTML='<b>Analyse:</b><br>'+res.raisons.join('<br>')+'<br><br><b>❌ Ne cliquez surtout pas, c’est un faux lien ! Danger.</b>';
+    sonDanger(); if(navigator.vibrate) navigator.vibrate([300,100,300,100,300]);
+    setTimeout(()=>parler('Attention ! Ne cliquez surtout pas, c’est un faux lien. Danger.'),600);
+  }
 }
 </script>
 </body>
