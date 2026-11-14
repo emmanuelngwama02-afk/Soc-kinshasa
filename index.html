@@ -18,12 +18,6 @@ button{margin-top:12px;padding:14px 28px;font-size:18px;background:#22242a;color
 #protect-fill{height:100%;width:0%;background:#00c853;color:white;font-weight:bold;line-height:28px;font-size:14px;transition:width 0.5s}
 #protect-raisons{background:#f7f7f7;padding:12px;border-radius:10px;max-width:420px;margin:10px auto;text-align:left;display:none;color:#111;font-size:14px}
 footer{background:#00e676;height:42px;width:100%}
-body.protect-danger{background:#d50000 !important}
-body.protect-danger main *{color:white !important}
-body.protect-danger #protect-raisons, body.protect-danger #protect-raisons *{color:#111 !important}
-body.protect-safe{background:#00c853 !important}
-body.protect-safe main *{color:white !important}
-body.protect-safe #protect-raisons, body.protect-safe #protect-raisons *{color:#111 !important}
 </style>
 </head>
 <body>
@@ -31,9 +25,9 @@ body.protect-safe #protect-raisons, body.protect-safe #protect-raisons *{color:#
 <main>
 <h2>Colle un lien, on te dit si c'est vrai ou faux</h2>
 <p>Protège Kinshasa contre les arnaques</p>
-<input id="lien" type="text" placeholder="Colle le lien ici... ex: https://google.com">
+<input id="lien" type="text" placeholder="Colle le lien ici...">
 <br>
-<button id="btn">VÉRIFIER</button>
+<button onclick="verifier()">VÉRIFIER</button>
 <div id="protect-bar"><div id="protect-fill">0%</div></div>
 <div id="protect-raisons"></div>
 </main>
@@ -43,31 +37,37 @@ let audioCtx=null;
 function bip(f,t,d,quand){try{if(!audioCtx)audioCtx=new(window.AudioContext||window.webkitAudioContext)();if(audioCtx.state==='suspended')audioCtx.resume();const tm=audioCtx.currentTime+quand;const o=audioCtx.createOscillator();const g=audioCtx.createGain();o.connect(g);g.connect(audioCtx.destination);o.frequency.value=f;o.type=t;g.gain.setValueAtTime(0.12,tm);g.gain.exponentialRampToValueAtTime(0.001,tm+d);o.start(tm);o.stop(tm+d);}catch(e){}}
 function sonDanger(){bip(220,'square',0.25,0);bip(180,'square',0.3,0.35);}
 function sonBon(){bip(700,'sine',0.4,0);}
+
+// --- ANCIENS PARAMETRES D'AVANT, CEUX QUI MARCHAIENT ---
 function analyser(url){
-  url=url.toLowerCase().trim(); let score=100; let raisons=[];
+  url=url.toLowerCase().trim();
+  let score=100; let raisons=[];
   if(!url.startsWith('https://')){score-=25;raisons.push('❌ Pas de HTTPS');}
-  if(url.includes('bit.ly')||url.includes('tinyurl')||url.includes('cutt.ly')){score-=30;raisons.push('❌ Lien raccourci suspect');}
-  if(url.includes('free')||url.includes('gratuit')||url.includes('gagner')||url.includes('cadeau')){score-=25;raisons.push('❌ Mot arnaque: gratuit/cadeau');}
-  if(url.includes('login')||url.includes('verify')||url.includes('confirm')){score-=20;raisons.push('❌ Faux login / vérification');}
-  if(url.includes('.tk')||url.includes('.ml')||url.includes('.xyz')||url.includes('.top')){score-=20;raisons.push('❌ Extension suspecte');}
-  if(url.includes('facebook.com')||url.includes('instagram.com')||url.includes('google.com')||url.includes('whatsapp.com')){score+=10;raisons.push('✅ Domaine connu');}
+  if(url.includes('bit.ly')||url.includes('tinyurl')){score-=30;raisons.push('❌ Lien raccourci suspect');}
+  if(url.includes('free')||url.includes('gratuit')||url.includes('gagner')||url.includes('cadeau')){score-=25;raisons.push('❌ Mot arnaque');}
+  if(url.includes('login')||url.includes('verify')){score-=20;raisons.push('❌ Faux login');}
+  if(url.includes('facebook.com')||url.includes('google.com')){score+=10;raisons.push('✅ Domaine connu');}
   if(raisons.length===0) raisons.push('✅ Aucun signal suspect');
-  return {score:Math.max(0,Math.min(100,score)), raisons};
+  if(score>100) score=100; if(score<0) score=0;
+  return {score:score, raisons:raisons};
 }
-document.getElementById('btn').addEventListener('click',()=>{
+function verifier(){
   const url=document.getElementById('lien').value;
   if(!url){alert('Colle d’abord un lien !');return;}
   const res=analyser(url);
-  const bar=document.getElementById('protect-bar'); const fill=document.getElementById('protect-fill'); const zone=document.getElementById('protect-raisons');
+  const bar=document.getElementById('protect-bar');
+  const fill=document.getElementById('protect-fill');
+  const zone=document.getElementById('protect-raisons');
   bar.style.display='block'; zone.style.display='block';
-  fill.style.width=res.score+'%'; fill.textContent=res.score+'% '+(res.score>=60?'VRAI ✅':'FAUX ❌');
+  fill.style.width=res.score+'%';
+  fill.textContent=res.score+'% '+(res.score>=60?'VRAI ✅':'FAUX ❌');
   fill.style.background=res.score>=60?'#00c853':'#d50000';
-  document.body.classList.remove('protect-danger','protect-safe');
-  if(res.score>=60){document.body.classList.add('protect-safe');sonBon();}
-  else{document.body.classList.add('protect-danger');sonDanger();if(navigator.vibrate)navigator.vibrate([200,100,200]);}
+  document.body.style.background=res.score>=60?'#00c853':'#d50000';
+  if(res.score>=60){sonBon();}
+  else{sonDanger(); if(navigator.vibrate) navigator.vibrate([200,100,200]);}
   zone.innerHTML='<b>Analyse:</b><br>'+res.raisons.join('<br>')+'<br><br><b>Score: '+res.score+'%</b>';
-  setTimeout(()=>{document.body.classList.remove('protect-danger','protect-safe');},3000);
-});
+  setTimeout(()=>{document.body.style.background='white';},3000);
+}
 </script>
 </body>
 </html>
