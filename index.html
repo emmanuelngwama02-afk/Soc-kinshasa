@@ -3,115 +3,45 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>SOC KINSHASA</title>
+<title>SOC KINSHASA - Emmanuel Ngwama</title>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
-body{font-family:Arial,sans-serif;background:#0a0a0a;color:white;min-height:100vh;display:flex;flex-direction:column}
-header{background:linear-gradient(135deg,#00e676,#00c853);color:#000;padding:20px 15px;text-align:center}
-header h1{font-size:28px;letter-spacing:2px}
-header p{font-size:15px;margin-top:6px}
-.stats{display:flex;justify-content:center;gap:12px;margin:14px 0}
-.stat{background:#1a1a1a;border-radius:14px;padding:12px 20px;text-align:center;min-width:110px}
-.stat b{display:block;font-size:18px}
-.stat span{font-size:14px;color:#ccc}
-.card{background:#12211a;border:1px solid #00e676;border-radius:20px;padding:22px 16px;margin:0 16px;text-align:center}
-.card h2{font-size:23px;margin-bottom:8px}
-.card p{color:#aaa;font-size:14px;margin-bottom:16px}
-input{width:100%;padding:14px;border-radius:10px;border:none;background:#000;color:white;font-size:15px;outline:none}
-button{width:100%;margin-top:14px;padding:14px;background:#00e676;color:#000;border:none;border-radius:10px;font-size:17px;font-weight:bold}
-#protect-bar{width:100%;height:30px;background:#000;border-radius:20px;overflow:hidden;margin:16px 0 0;display:none;border:1px solid #333}
-#protect-fill{height:100%;width:0%;background:#00c853;color:white;font-weight:bold;line-height:30px;font-size:14px;transition:width .5s}
-#protect-raisons{background:#000;padding:12px;border-radius:10px;margin-top:10px;text-align:left;display:none;font-size:14px;line-height:1.6}
-.card2{background:#1a1a1a;border-radius:20px;padding:18px;margin:16px;text-align:center}
-.card2 h3{font-size:17px;margin-bottom:10px}
-.card2 p{color:#aaa;font-size:14px;line-height:1.9}
-footer{margin-top:auto;text-align:center;color:#666;font-size:13px;padding:12px 0 0}
-.bottom{height:14px;background:#00e676;margin-top:10px}
-</style>
-</head>
-<body>
-<header><h1>🛡️ SOC KINSHASA</h1><p>Mini SOC Défenseur - 100% Défensif</p></header>
-<div class="stats">
-<div class="stat"><b id="count">0</b><span>Analyses</span></div>
-<div class="stat"><b>Kinshasa 🇨🇩</b><span>En ligne</span></div>
-</div>
-<div class="card">
-<h2>Analyse un lien suspect</h2>
-<p>Colle un lien avant de cliquer.</p>
-<input id="lien" type="text" placeholder="Ex: https://google.com">
-<button onclick="verifier()">🔍 ANALYSER</button>
-<div id="protect-bar"><div id="protect-fill">0%</div></div>
-<div id="protect-raisons"></div>
-</div>
-<div class="card2">
-<h3>🚨 Signes de phishing</h3>
-<p>• Cadeau gratuit / gagner<br>• On te demande mot de passe urgent<br>• Lien bizarre bit.ly<br>• Faute dans le nom du site</p>
-</div>
-<footer>Créé à Kinshasa par Emmanuel</footer>
-<div class="bottom"></div>
-<script>
-let audioCtx=null, total=0;
-function getCtx(){if(!audioCtx)audioCtx=new(window.AudioContext||window.webkitAudioContext)();if(audioCtx.state==='suspended')audioCtx.resume();return audioCtx;}
-function note(freq, type, duree, quand, vol=0.15){
-  try{
-    const ctx=getCtx(); const t=ctx.currentTime+quand;
-    const o=ctx.createOscillator(); const g=ctx.createGain();
-    o.connect(g); g.connect(ctx.destination);
-    o.frequency.value=freq; o.type=type;
-    g.gain.setValueAtTime(0.0001,t);
-    g.gain.exponentialRampToValueAtTime(vol,t+0.02);
-    g.gain.exponentialRampToValueAtTime(0.0001,t+duree);
-    o.start(t); o.stop(t+duree+0.05);
-  }catch(e){}
-}
-function sonBon(){note(523.25,'sine',0.25,0,0.18);note(659.25,'sine',0.25,0.15,0.18);note(783.99,'sine',0.25,0.30,0.18);note(1046.50,'sine',0.5,0.45,0.20);}
-function sonDanger(){note(400,'sawtooth',0.3,0,0.12);note(300,'sawtooth',0.3,0.25,0.12);note(200,'sawtooth',0.5,0.50,0.14);note(400,'sawtooth',0.3,0.90,0.12);note(200,'sawtooth',0.5,1.15,0.14);}
-// VOIX QUI PARLE EN FRANCAIS
-function parler(texte){
-  try{
-    window.speechSynthesis.cancel();
-    const u=new SpeechSynthesisUtterance(texte);
-    u.lang='fr-FR'; u.rate=1; u.pitch=1; u.volume=1;
-    window.speechSynthesis.speak(u);
-  }catch(e){}
-}
-function analyser(url){
-  url=url.toLowerCase().trim();
-  let score=100; let raisons=[]; let danger=false;
-  const connus=['google.com','facebook.com','whatsapp.com','youtube.com','instagram.com','tiktok.com','wikipedia.org'];
-  for(let d of connus){ if(url.includes(d)){ return {score:100, raisons:['✅ Domaine officiel connu']}; } }
-  if(!url.startsWith('https://')){score-=40;raisons.push('❌ Pas de HTTPS - très dangereux'); danger=true;}
-  if(url.includes('bit.ly')||url.includes('tinyurl')||url.includes('t.me')||url.includes('cutt.ly')){score=10;raisons.push('❌ Lien raccourci suspect - FAUX'); danger=true;}
-  if(url.includes('free')||url.includes('gratuit')||url.includes('gagner')||url.includes('cadeau')||url.includes('cadeaux')||url.includes('bonus')||url.includes('argent')){score=Math.min(score,15);raisons.push('❌ Mot arnaque : cadeau / gagner / gratuit = FAUX'); danger=true;}
-  if(url.includes('login')||url.includes('verify')||url.includes('verifie')||url.includes('password')||url.includes('mot-de-passe')){score=Math.min(score,20);raisons.push('❌ Faux login / demande mot de passe'); danger=true;}
-  if(url.includes('urgent')||url.includes('compte-bloque')||url.includes('bloque')||url.includes('suspendu')){score=Math.min(score,20);raisons.push('❌ Urgence - technique d’arnaque'); danger=true;}
-  if(danger && score>30) score=15;
-  if(score>100) score=100; if(score<0) score=0;
-  if(raisons.length===0) raisons.push('✅ Aucun signal suspect');
-  return {score:score, raisons:raisons};
-}
-function verifier(){
-  const url=document.getElementById('lien').value;
-  if(!url){alert('Colle d’abord un lien !');return;}
-  const res=analyser(url);
-  total++; document.getElementById('count').textContent=total;
-  const bar=document.getElementById('protect-bar');
-  const fill=document.getElementById('protect-fill');
-  const zone=document.getElementById('protect-raisons');
-  bar.style.display='block'; zone.style.display='block';
-  fill.style.width=res.score+'%';
-  fill.textContent=res.score+'% '+(res.score>=60?'VRAI ✅':'FAUX ❌');
-  fill.style.background=res.score>=60?'#00c853':'#d50000';
-  if(res.score>=60){
-    zone.innerHTML='<b>Analyse:</b><br>'+res.raisons.join('<br>')+'<br><br><b>✅ Oui, c’est un site certifié. Vous pouvez continuer.</b>';
-    sonBon();
-    setTimeout(()=>parler('Oui, c’est un site certifié. Vous pouvez continuer.'),600);
-  } else {
-    zone.innerHTML='<b>Analyse:</b><br>'+res.raisons.join('<br>')+'<br><br><b>❌ Ne cliquez surtout pas, c’est un faux lien ! Danger.</b>';
-    sonDanger(); if(navigator.vibrate) navigator.vibrate([300,100,300,100,300]);
-    setTimeout(()=>parler('Attention ! Ne cliquez surtout pas, c’est un faux lien. Danger.'),600);
-  }
-}
-</script>
-</body>
-</html>
+body{font-family:'Inter','Plus Jakarta Sans',system-ui,-apple-system,sans-serif;background:#070B09;color:#fff;min-height:100vh;display:flex;flex-direction:column}
+.topbar{background:linear-gradient(135deg,#00E676 0%,#00C853 45%,#00B0FF 100%);padding:28px 18px 22px;text-align:center;border-radius:0 0 28px 28px;position:relative;overflow:hidden}
+.topbar:before{content:'';position:absolute;inset:0;background:radial-gradient(300px 120px at 20% 0%,rgba(255,255,255,.35),transparent 60%)}
+.topbar h1{font-family:'Plus Jakarta Sans',sans-serif;font-size:30px;font-weight:800;letter-spacing:-.5px;color:#02120A;position:relative}
+.topbar h1 span{font-size:32px}
+.topbar .subtitle{font-size:13px;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;color:#02331A;margin-top:4px;position:relative}
+.topbar .owner{margin:14px auto 0;background:rgba(255,255,255,.92);width:fit-content;padding:8px 14px;border-radius:999px;font-size:13px;font-weight:700;color:#111;display:flex;gap:8px;align-items:center;position:relative;box-shadow:0 8px 20px rgba(0,0,0,.15)}
+.topbar .owner i{width:26px;height:26px;background:#00C853;color:white;border-radius:50%;display:flex;align-items:center;justify-content:center;font-style:normal;font-size:13px}
+.contact{background:#101713;margin:16px 16px 0;border:1px solid #1F2A24;border-radius:20px;padding:16px;text-align:center}
+.contact small{color:#9AA8A0;font-size:12px;letter-spacing:.8px;text-transform:uppercase;font-weight:600}
+.contact b{display:block;font-size:17px;margin:6px 0 2px}
+.contact p{color:#C7D2CC;font-size:13px}
+.contact a{display:flex;align-items:center;justify-content:center;gap:8px;margin-top:12px;background:#25D366;color:#04120A;font-weight:800;padding:13px;border-radius:14px;text-decoration:none;font-size:15px}
+.contact a span{font-size:18px}
+.stats{display:flex;gap:12px;margin:16px}
+.stat{flex:1;background:linear-gradient(180deg,#161F1B,#0F1512);border:1px solid #222E27;border-radius:18px;padding:16px;text-align:center}
+.stat b{display:block;font-size:22px;font-family:'Plus Jakarta Sans',sans-serif}
+.stat span{font-size:12px;color:#8FA094;font-weight:500}
+.card{background:#fff;color:#111;border-radius:26px;padding:22px 18px;margin:0 16px;box-shadow:0 20px 40px rgba(0,0,0,.35)}
+.card .badge{display:inline-block;background:#E6FFF0;color:#00A651;font-size:11px;font-weight:800;letter-spacing:1px;padding:6px 10px;border-radius:999px;text-transform:uppercase}
+.card h2{font-family:'Plus Jakarta Sans',sans-serif;font-size:24px;line-height:1.15;letter-spacing:-.6px;margin:12px 0 6px}
+.card h2 em{font-style:normal;color:#00A651}
+.card p{color:#5B6B62;font-size:14px;line-height:1.5}
+.input-wrap{margin-top:16px;background:#F2F5F3;border:1px solid #E3EAE5;border-radius:16px;padding:6px 6px 6px 14px;display:flex;align-items:center;gap:8px}
+.input-wrap span{font-size:18px}
+input{flex:1;border:none;background:transparent;outline:none;font-size:15px;font-weight:500;color:#111;padding:12px 0}
+input::placeholder{color:#9AA8A0}
+button{width:100%;margin-top:12px;padding:15px;background:#111;color:white;border:none;border-radius:14px;font-size:16px;font-weight:800;letter-spacing:.2px;cursor:pointer}
+button:active{transform:scale(.98)}
+#protect-bar{width:100%;height:34px;background:#F0F3F1;border-radius:999px;overflow:hidden;margin:16px 0 0;display:none;border:1px solid #E3EAE5}
+#protect-fill{height:100%;width:0%;background:#00C853;color:white;font-weight:800;line-height:34px;font-size:13px;transition:width .6s;text-align:center}
+#protect-raisons{background:#0F1512;color:white;padding:14px;border-radius:14px;margin-top:12px;text-align:left;display:none;font-size:14px;line-height:1.7}
+.features{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:16px}
+.feat{background:#141B17;border:1px solid #222E27;border-radius:18px;padding:14px}
+.feat b{font-size:22px}
+.feat h4{font-size:13px;margin:6px 0 4px}
+.feat p{font-size:12px;color:#8FA094;line-height:1.5}
+.card2{background:linear-gradient(135deg,#00C853,#00B0FF);border
