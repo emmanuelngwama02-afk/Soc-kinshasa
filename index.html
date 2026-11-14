@@ -64,30 +64,20 @@ function note(freq, type, duree, quand, vol=0.15){
     o.start(t); o.stop(t+duree+0.05);
   }catch(e){}
 }
-// SON VRAI : joyeux, qui monte - Do Mi Sol Do
-function sonBon(){
-  note(523.25,'sine',0.25,0,0.18);
-  note(659.25,'sine',0.25,0.15,0.18);
-  note(783.99,'sine',0.25,0.30,0.18);
-  note(1046.50,'sine',0.5,0.45,0.20);
-}
-// SON FAUX : alarme grave qui descend, ça fait vraiment FAUX
-function sonDanger(){
-  note(400,'sawtooth',0.3,0,0.12);
-  note(300,'sawtooth',0.3,0.25,0.12);
-  note(200,'sawtooth',0.5,0.50,0.14);
-  note(400,'sawtooth',0.3,0.90,0.12);
-  note(200,'sawtooth',0.5,1.15,0.14);
-}
+function sonBon(){note(523.25,'sine',0.25,0,0.18);note(659.25,'sine',0.25,0.15,0.18);note(783.99,'sine',0.25,0.30,0.18);note(1046.50,'sine',0.5,0.45,0.20);}
+function sonDanger(){note(400,'sawtooth',0.3,0,0.12);note(300,'sawtooth',0.3,0.25,0.12);note(200,'sawtooth',0.5,0.50,0.14);note(400,'sawtooth',0.3,0.90,0.12);note(200,'sawtooth',0.5,1.15,0.14);}
+// REGLE DURE : 1 SEUL SIGNAL ROUGE = FAUX DIRECT, ON NE PEUT PLUS MONTER A 75%
 function analyser(url){
   url=url.toLowerCase().trim();
-  let score=100; let raisons=[];
-  if(!url.startsWith('https://')){score-=40;raisons.push('❌ Pas de HTTPS - très dangereux');}
-  if(url.includes('bit.ly')||url.includes('tinyurl')||url.includes('t.me')||url.includes('cutt.ly')){score-=50;raisons.push('❌ Lien raccourci suspect');}
-  if(url.includes('free')||url.includes('gratuit')||url.includes('gagner')||url.includes('cadeau')||url.includes('cadeaux')||url.includes('bonus')||url.includes('argent')){score-=50;raisons.push('❌ Mot arnaque : cadeau / gagner / gratuit');}
-  if(url.includes('login')||url.includes('verify')||url.includes('verifie')||url.includes('password')||url.includes('mot-de-passe')){score-=40;raisons.push('❌ Faux login / demande mot de passe');}
-  if(url.includes('urgent')||url.includes('compte-bloque')||url.includes('bloque')){score-=40;raisons.push('❌ Urgence - technique d’arnaque');}
-  if(url.includes('facebook.com')||url.includes('google.com')||url.includes('whatsapp.com')||url.includes('youtube.com')){score=100;raisons=['✅ Domaine officiel connu'];}
+  let score=100; let raisons=[]; let danger=false;
+  const connus=['google.com','facebook.com','whatsapp.com','youtube.com','instagram.com','tiktok.com','wikipedia.org'];
+  for(let d of connus){ if(url.includes(d)){ return {score:100, raisons:['✅ Domaine officiel connu']}; } }
+  if(!url.startsWith('https://')){score-=40;raisons.push('❌ Pas de HTTPS - très dangereux'); danger=true;}
+  if(url.includes('bit.ly')||url.includes('tinyurl')||url.includes('t.me')||url.includes('cutt.ly')){score=10;raisons.push('❌ Lien raccourci suspect - FAUX'); danger=true;}
+  if(url.includes('free')||url.includes('gratuit')||url.includes('gagner')||url.includes('cadeau')||url.includes('cadeaux')||url.includes('bonus')||url.includes('argent')||url.includes('iphone-gratuit')){score=Math.min(score,15);raisons.push('❌ Mot arnaque : cadeau / gagner / gratuit = FAUX'); danger=true;}
+  if(url.includes('login')||url.includes('verify')||url.includes('verifie')||url.includes('password')||url.includes('mot-de-passe')){score=Math.min(score,20);raisons.push('❌ Faux login / demande mot de passe'); danger=true;}
+  if(url.includes('urgent')||url.includes('compte-bloque')||url.includes('bloque')||url.includes('suspendu')){score=Math.min(score,20);raisons.push('❌ Urgence - technique d’arnaque'); danger=true;}
+  if(danger && score>30) score=15;
   if(score>100) score=100; if(score<0) score=0;
   if(raisons.length===0) raisons.push('✅ Aucun signal suspect');
   return {score:score, raisons:raisons};
