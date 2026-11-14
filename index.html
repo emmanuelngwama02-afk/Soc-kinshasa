@@ -46,5 +46,50 @@ button{width:100%;margin-top:12px;padding:14px;border:none;border-radius:12px;ba
 <p style="color:#666;font-size:12px">Créé à Kinshasa par Emmanuel</p>
 
 
+
+<script>
+// EMMANUEL PROTECT - SON PROPRE V2 - ne bug plus
+let audioCtx = null;
+function bipPropre(type){
+  try{
+    if(!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+    if(audioCtx.state === 'suspended') audioCtx.resume();
+    // Si un son joue déjà, on l'arrête, on ne superpose pas
+    if(audioCtx._osc){ try{audioCtx._osc.stop();}catch(e){} }
+    const osc = audioCtx.createOscillator();
+    const gain = audioCtx.createGain();
+    osc.connect(gain); gain.connect(audioCtx.destination);
+    audioCtx._osc = osc;
+    if(type === 'danger'){
+      osc.frequency.value = 880; // aigu = danger
+      osc.type = 'square';
+    } else {
+      osc.frequency.value = 520; // doux = bon
+      osc.type = 'sine';
+    }
+    gain.gain.value = 0.08; // volume bas, pas agressif
+    osc.start();
+    osc.stop(audioCtx.currentTime + 0.3); // STOP après 0.3s, c'est ça qui empêche le bug
+    osc.onended = () => { audioCtx._osc = null; };
+  }catch(e){ console.log('son bloqué par navigateur, pas grave'); }
+}
+// On branche le son sur le bouton VERIFIER, pas tout seul
+document.addEventListener('DOMContentLoaded', () => {
+  const btn = document.querySelector('button');
+  if(btn){
+    btn.addEventListener('click', () => {
+      setTimeout(() => {
+        const txt = document.body.innerText.toLowerCase();
+        if(txt.includes('dangereux') || txt.includes('arnaque') || txt.includes('suspect') || txt.includes('rouge')){
+          bipPropre('danger');
+        } else {
+          bipPropre('bon');
+        }
+      }, 200);
+    });
+  }
+});
+</script>
 </body>
+
 </html><!-- rebuild -->
