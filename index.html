@@ -6,100 +6,72 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>SOC KINSHASA</title>
-<style>
-body{background:#050807;color:#fff;font-family:Arial;margin:0;text-align:center}
-.h{background:linear-gradient(135deg,#00ff88,#00b894);padding:22px;color:#000}
-.h h1{margin:0;font-size:28px;letter-spacing:2px}
-.box{max-width:520px;margin:20px auto;background:#0f1a16;border:1px solid #00ff88;border-radius:20px;padding:20px}
-input{width:100%;padding:14px;border-radius:12px;border:1px solid #333;background:#000;color:#fff;font-size:15px}
-button{width:100%;margin-top:12px;padding:14px;border:none;border-radius:12px;background:#00ff88;font-weight:800;font-size:16px}
-#r{margin-top:15px;padding:15px;border-radius:12px;display:none}
-.card{display:inline-block;background:#111a17;border:1px solid #222;border-radius:15px;padding:12px 20px;margin:5px}
-</style>
-
-<style>
-  @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;700;900&display=swap');
-    * { font-family: 'Poppins', sans-serif !important; box-sizing: border-box; }
-  body { background: linear-gradient(160deg, #0f0c29, #302b63, #24243e) !important; background-attachment: fixed; color: white !important; }
-  h1 { font-size: 32px !important; font-weight: 900 !important; letter-spacing: 1px; background: linear-gradient(90deg, #00ff88, #00c6ff, #ff00ff); -webkit-background-clip: text; -webkit-text-fill-color: transparent; text-align: center; text-shadow: none !important; }
-  .card, div[style*="background:"] { background: rgba(255,255,255,0.08) !important; backdrop-filter: blur(15px); border: 1px solid rgba(255,255,255,0.15) !important; border-radius: 22px !important; box-shadow: 0 10px 30px rgba(0,0,0,0.4) !important; }
-  input { background: rgba(255,255,255,0.12) !important; border: 1px solid #00ff88 !important; border-radius: 15px !important; color: white !important; padding: 15px !important; font-size: 16px !important; }
-  button { background: linear-gradient(90deg, #00ff88, #00c6ff) !important; color: #000 !important; border: none !important; border-radius: 15px !important; padding: 16px !important; font-weight: 900 !important; font-size: 18px !important; box-shadow: 0 5px 20px rgba(0,255,136,0.4) !important; text-transform: uppercase; }
-  button:active { transform: scale(0.96); }
-  a[href*="wa.me"] { background: linear-gradient(90deg, #25D366, #128C7E) !important; box-shadow: 0 5px 20px rgba(37,211,102,0.5) !important; }
-</style>
-</head>
-<body><div style="text-align:center; background: linear-gradient(90deg, #ff00ff, #00c6ff); padding:10px; border-radius:20px; margin:10px; font-weight:bold; font-size:14px;">✨ ★ Bienvenue dans le futur de la protection ★ ✨</div><p style="text-align:center; color:#00ff88; font-size:16px; margin-top:5px; font-weight:bold;">🚪 ★ Ici on vous protège contre les faux liens ★</p><p style="text-align:center; margin-top:5px;"><a href="https://wa.me/243992228204?text=Bonjour%20Emmanuel%2C%20j%27ai%20vu%20ton%20appli%20EMMANUEL%20PROTECT" style="background:#25D366; color:white; padding:8px 18px; border-radius:20px; text-decoration:none; font-weight:bold;">📱 WhatsApp : 0992228204</a></p>
-<div class="h"><h1>🛡️ SOC KINSHASA</h1><p>Mini SOC Défenseur - 100% Défensif</p></div>
-<div class="card"><b id="t">0</b><br>Analyses</div>
-<div class="card"><b>Kinshasa 🇨🇩</b><br>En ligne</div>
-<div class="box">
-<h2>⚡ ✦ Analyse un lien suspect ✦ ⚡</h2>
-<p style="color:#bbb;font-size:13px">Colle un lien avant de cliquer.</p>
-<input id="u" placeholder="Ex: https://google.com">
-<button onclick="a()">🔍 🛡️ ANALYSER MAINTENANT 🛡️</button>
-<div id="r"></div>
-</div>
-<div class="box" style="border-color:#333">
-<b>🚨 Signes de phishing</b><p style="color:#bbb;font-size:13px;line-height:1.8">• Cadeau gratuit / gagner<br>• On te demande mot de passe urgent<br>• Lien bizarre bit.ly<br>• Faute dans le nom du site</p>
-</div>
-<p style="color:#666;font-size:12px">Créé à Kinshasa par Emmanuel</p>
-
-
 
 
 
 <style>
-body.protect-danger { background: #ff0000 !important; transition: 0.3s; }
-body.protect-danger * { color: white !important; }
-body.protect-safe { background: #00c853 !important; transition: 0.3s; }
-body.protect-safe * { color: white !important; }
+#protect-bar{width:100%;height:22px;background:#ddd;border-radius:20px;overflow:hidden;margin:12px 0;display:none}
+#protect-fill{height:100%;width:0%;background:#00c853;transition:width 0.5s;text-align:center;color:white;font-weight:bold;font-size:13px;line-height:22px}
+body.protect-danger{background:#d50000 !important}
+body.protect-safe{background:#00c853 !important}
+body.protect-danger *, body.protect-safe *{color:white !important}
 </style>
+<div id="protect-bar"><div id="protect-fill">0%</div></div>
 <script>
-// EMMANUEL PROTECT V3 - ROUGE / VERT + SON DIFFERENT
-let audioCtx = null;
-function bip(frequence, type, duree, quand){
-  try{
-    if(!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-    if(audioCtx.state === 'suspended') audioCtx.resume();
-    const t = audioCtx.currentTime + quand;
-    const osc = audioCtx.createOscillator();
-    const gain = audioCtx.createGain();
-    osc.connect(gain); gain.connect(audioCtx.destination);
-    osc.frequency.value = frequence;
-    osc.type = type;
-    gain.gain.setValueAtTime(0.12, t);
-    gain.gain.exponentialRampToValueAtTime(0.001, t + duree);
-    osc.start(t);
-    osc.stop(t + duree);
-  }catch(e){}
-}
-function sonDanger(){ bip(220, 'square', 0.25, 0); bip(220, 'square', 0.25, 0.35); }
-function sonBon(){ bip(700, 'sine', 0.4, 0); }
+// EMMANUEL PROTECT V4 - POURCENTAGE VRAI / FAUX
+let audioCtx=null;
+function bip(f,t,d,quand){try{if(!audioCtx)audioCtx=new(window.AudioContext||window.webkitAudioContext)();if(audioCtx.state==='suspended')audioCtx.resume();const tm=audioCtx.currentTime+quand;const o=audioCtx.createOscillator();const g=audioCtx.createGain();o.connect(g);g.connect(audioCtx.destination);o.frequency.value=f;o.type=t;g.gain.setValueAtTime(0.12,tm);g.gain.exponentialRampToValueAtTime(0.001,tm+d);o.start(tm);o.stop(tm+d);}catch(e){}}
+function sonDanger(){bip(220,'square',0.25,0);bip(180,'square',0.3,0.35);}
+function sonBon(){bip(700,'sine',0.4,0);}
 
-document.addEventListener('DOMContentLoaded', () => {
-  const btn = document.querySelector('button');
-  if(!btn) return;
-  btn.addEventListener('click', () => {
-    setTimeout(() => {
-      const txt = document.body.innerText.toLowerCase();
-      const estDanger = txt.includes('dangereux') || txt.includes('arnaque') || txt.includes('suspect') || txt.includes('faux') || txt.includes('fake') || txt.includes('attention') || txt.includes('risque');
-      document.body.classList.remove('protect-danger','protect-safe');
-      if(estDanger){
-        document.body.classList.add('protect-danger');
-        sonDanger();
-        navigator.vibrate && navigator.vibrate([200,100,200]);
-      } else {
-        document.body.classList.add('protect-safe');
-        sonBon();
-      }
-      // Retour normal après 2 secondes
-      setTimeout(()=>{ document.body.classList.remove('protect-danger','protect-safe'); }, 2500);
-    }, 300);
+function analyserLien(url){
+  url=url.toLowerCase().trim();
+  let score=100; let raisons=[];
+  if(!url.startsWith('https://')){score-=25;raisons.push('Pas de HTTPS');}
+  if(url.includes('bit.ly')||url.includes('tinyurl')||url.includes('t.me')||url.includes('cutt.ly')){score-=30;raisons.push('Lien raccourci suspect');}
+  if(/\d+\.\d+\.\d+\.\d+/.test(url)){score-=35;raisons.push('Adresse IP au lieu de nom');}
+  if(url.includes('free')||url.includes('gratuit')||url.includes('gagner')||url.includes('cadeau')||url.includes('crypto-double')){score-=25;raisons.push('Mot arnaque: gratuit/cadeau');}
+  if(url.includes('login')||url.includes('verify')||url.includes('confirm')||url.includes('account-suspended')){score-=20;raisons.push('Faux login / vérification');}
+  if(url.split('.').length>4){score-=15;raisons.push('Trop de sous-domaines');}
+  if(url.length>80){score-=10;raisons.push('Lien trop long');}
+  if(url.includes('.tk')||url.includes('.ml')||url.includes('.xyz')||url.includes('.top')){score-=20;raisons.push('Extension suspecte');}
+  if(url.includes('facebook.com')||url.includes('instagram.com')||url.includes('google.com')||url.includes('whatsapp.com')||url.includes('airtel')||url.includes('vodacom')){score+=10;raisons.push('Domaine connu');}
+  score=Math.max(0,Math.min(100,score));
+  return {score, raisons};
+}
+
+document.addEventListener('DOMContentLoaded',()=>{
+  const btn=document.querySelector('button');
+  const input=document.querySelector('input');
+  if(!btn||!input) return;
+  btn.addEventListener('click',()=>{
+    const url=input.value;
+    if(!url) return;
+    const res=analyserLien(url);
+    const bar=document.getElementById('protect-bar');
+    const fill=document.getElementById('protect-fill');
+    bar.style.display='block';
+    fill.style.width=res.score+'%';
+    fill.textContent=res.score+'% '+ (res.score>=60?'VRAI ✅':'FAUX ❌');
+    fill.style.background=res.score>=60?'#00c853':'#d50000';
+    document.body.classList.remove('protect-danger','protect-safe');
+    if(res.score>=60){
+      document.body.classList.add('protect-safe');
+      sonBon();
+    }else{
+      document.body.classList.add('protect-danger');
+      sonDanger();
+      if(navigator.vibrate) navigator.vibrate([200,100,200]);
+    }
+    let zone=document.getElementById('protect-raisons');
+    if(!zone){zone=document.createElement('div');zone.id='protect-raisons';bar.after(zone);}
+    zone.innerHTML='<b>Analyse:</b><br>'+res.raisons.join('<br>')+'<br><b>Score: '+res.score+'%</b>';
+    setTimeout(()=>{document.body.classList.remove('protect-danger','protect-safe');},3000);
   });
 });
 </script>
 </body>
+
 
 
 </html><!-- rebuild -->
