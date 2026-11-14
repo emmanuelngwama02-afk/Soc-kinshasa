@@ -69,6 +69,5 @@ document.addEventListener('DOMContentLoaded', cacherBoutonInstall);
 setTimeout(cacherBoutonInstall, 1000);
 setTimeout(cacherBoutonInstall, 2000);
 </script>
-<div id="up" style="display:none;position:fixed;top:0;left:0;right:0;background:#FF9800;color:#fff;padding:12px;text-align:center;z-index:99999;font-weight:bold">Nouvelle version ! <button onclick="location.reload(true)" style="background:#fff;color:#FF9800;border:none;padding:6px 14px;border-radius:20px;font-weight:bold">METTRE A JOUR</button></div>
-<script>fetch('version.txt?v='+Date.now()).then(r=>r.text()).then(v=>{if(localStorage.v&&localStorage.v.trim()!=v.trim())document.getElementById('up').style.display='block';localStorage.v=v})</script></body>
+<div id="up" style="display:none;position:fixed;top:0;left:0;right:0;background:#FF9800;color:#fff;padding:16px;text-align:center;z-index:99999;font-weight:bold;font-size:16px;box-shadow:0 4px 10px rgba(0,0,0,0.3)">Nouvelle version disponible ! <button onclick="localStorage.v=document.getElementById('up').dataset.v;location.reload(true)" style="background:#fff;color:#FF9800;border:none;padding:8px 18px;border-radius:20px;font-weight:bold;margin-left:8px">METTRE A JOUR</button></div><script>fetch('version.txt?v='+Date.now()).then(r=>r.text()).then(v=>{v=v.trim();var el=document.getElementById('up');el.dataset.v=v;if(localStorage.v&&localStorage.v.trim()!=v){el.style.display='block'}else{localStorage.v=v}})</script></body>
 </html>
