@@ -1,69 +1,77 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#00ff88">
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>EMMANUEL PROTECT - Soc Kinshasa</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SOC KINSHASA</title>
+
+
+
 <style>
-body{font-family:Arial,sans-serif;text-align:center;padding:20px;background:#f2f2f2;transition:0.3s}
-h1{color:#111}
-input{width:90%;max-width:400px;padding:14px;font-size:16px;border-radius:10px;border:2px solid #333}
-button{padding:14px 25px;font-size:18px;background:#111;color:white;border:none;border-radius:10px;margin-top:10px}
-#protect-bar{width:90%;max-width:400px;height:26px;background:#ddd;border-radius:20px;overflow:hidden;margin:15px auto;display:none}
-#protect-fill{height:100%;width:0%;background:#00c853;transition:width 0.5s;color:white;font-weight:bold;line-height:26px;font-size:14px}
-#protect-raisons{background:white;padding:12px;border-radius:10px;max-width:400px;margin:10px auto;text-align:left;display:none}
+#protect-bar{width:100%;height:22px;background:#ddd;border-radius:20px;overflow:hidden;margin:12px 0;display:none}
+#protect-fill{height:100%;width:0%;background:#00c853;transition:width 0.5s;text-align:center;color:white;font-weight:bold;font-size:13px;line-height:22px}
 body.protect-danger{background:#d50000 !important}
 body.protect-safe{background:#00c853 !important}
 body.protect-danger *, body.protect-safe *{color:white !important}
-body.protect-danger #protect-raisons, body.protect-safe #protect-raisons{color:black !important}
-body.protect-danger #protect-raisons *, body.protect-safe #protect-raisons *{color:black !important}
 </style>
-</head>
-<body>
-<h1>🛡️ EMMANUEL PROTECT</h1>
-<p>Colle un lien, on te dit si c'est vrai ou faux</p>
-<input id="lien" type="text" placeholder="Colle le lien ici... ex: https://google.com">
-<br>
-<button id="btn">VÉRIFIER</button>
 <div id="protect-bar"><div id="protect-fill">0%</div></div>
-<div id="protect-raisons"></div>
-<p style="font-size:13px">Soc-Kinshasa - Protège Kinshasa contre les arnaques</p>
 <script>
+// EMMANUEL PROTECT V4 - POURCENTAGE VRAI / FAUX
 let audioCtx=null;
 function bip(f,t,d,quand){try{if(!audioCtx)audioCtx=new(window.AudioContext||window.webkitAudioContext)();if(audioCtx.state==='suspended')audioCtx.resume();const tm=audioCtx.currentTime+quand;const o=audioCtx.createOscillator();const g=audioCtx.createGain();o.connect(g);g.connect(audioCtx.destination);o.frequency.value=f;o.type=t;g.gain.setValueAtTime(0.12,tm);g.gain.exponentialRampToValueAtTime(0.001,tm+d);o.start(tm);o.stop(tm+d);}catch(e){}}
 function sonDanger(){bip(220,'square',0.25,0);bip(180,'square',0.3,0.35);}
 function sonBon(){bip(700,'sine',0.4,0);}
-function analyser(url){
-  url=url.toLowerCase().trim(); let score=100; let raisons=[];
-  if(!url.startsWith('https://')){score-=25;raisons.push('❌ Pas de HTTPS');}
-  if(url.includes('bit.ly')||url.includes('tinyurl')||url.includes('cutt.ly')){score-=30;raisons.push('❌ Lien raccourci suspect');}
-  if(url.includes('free')||url.includes('gratuit')||url.includes('gagner')||url.includes('cadeau')){score-=25;raisons.push('❌ Mot arnaque: gratuit/cadeau');}
-  if(url.includes('login')||url.includes('verify')||url.includes('confirm')){score-=20;raisons.push('❌ Faux login / vérification');}
-  if(url.split('.').length>4){score-=15;raisons.push('❌ Trop de sous-domaines');}
-  if(url.length>80){score-=10;raisons.push('❌ Lien trop long');}
-  if(url.includes('.tk')||url.includes('.ml')||url.includes('.xyz')||url.includes('.top')){score-=20;raisons.push('❌ Extension suspecte');}
-  if(url.includes('facebook.com')||url.includes('instagram.com')||url.includes('google.com')||url.includes('whatsapp.com')){score+=10;raisons.push('✅ Domaine connu');}
-  if(raisons.length===0) raisons.push('✅ Aucun signal suspect');
+
+function analyserLien(url){
+  url=url.toLowerCase().trim();
+  let score=100; let raisons=[];
+  if(!url.startsWith('https://')){score-=25;raisons.push('Pas de HTTPS');}
+  if(url.includes('bit.ly')||url.includes('tinyurl')||url.includes('t.me')||url.includes('cutt.ly')){score-=30;raisons.push('Lien raccourci suspect');}
+  if(/\d+\.\d+\.\d+\.\d+/.test(url)){score-=35;raisons.push('Adresse IP au lieu de nom');}
+  if(url.includes('free')||url.includes('gratuit')||url.includes('gagner')||url.includes('cadeau')||url.includes('crypto-double')){score-=25;raisons.push('Mot arnaque: gratuit/cadeau');}
+  if(url.includes('login')||url.includes('verify')||url.includes('confirm')||url.includes('account-suspended')){score-=20;raisons.push('Faux login / vérification');}
+  if(url.split('.').length>4){score-=15;raisons.push('Trop de sous-domaines');}
+  if(url.length>80){score-=10;raisons.push('Lien trop long');}
+  if(url.includes('.tk')||url.includes('.ml')||url.includes('.xyz')||url.includes('.top')){score-=20;raisons.push('Extension suspecte');}
+  if(url.includes('facebook.com')||url.includes('instagram.com')||url.includes('google.com')||url.includes('whatsapp.com')||url.includes('airtel')||url.includes('vodacom')){score+=10;raisons.push('Domaine connu');}
   score=Math.max(0,Math.min(100,score));
-  return {score,raisons};
+  return {score, raisons};
 }
-document.getElementById('btn').addEventListener('click',()=>{
-  const url=document.getElementById('lien').value;
-  if(!url){alert('Colle d’abord un lien !');return;}
-  const res=analyser(url);
-  const bar=document.getElementById('protect-bar');
-  const fill=document.getElementById('protect-fill');
-  const zone=document.getElementById('protect-raisons');
-  bar.style.display='block'; zone.style.display='block';
-  fill.style.width=res.score+'%';
-  fill.textContent=res.score+'% '+(res.score>=60?'VRAI ✅':'FAUX ❌');
-  fill.style.background=res.score>=60?'#00c853':'#d50000';
-  document.body.classList.remove('protect-danger','protect-safe');
-  if(res.score>=60){document.body.classList.add('protect-safe');sonBon();}
-  else{document.body.classList.add('protect-danger');sonDanger();if(navigator.vibrate)navigator.vibrate([200,100,200]);}
-  zone.innerHTML='<b>Analyse:</b><br>'+res.raisons.join('<br>')+'<br><br><b>Score: '+res.score+'%</b>';
-  setTimeout(()=>{document.body.classList.remove('protect-danger','protect-safe');},3000);
+
+document.addEventListener('DOMContentLoaded',()=>{
+  const btn=document.querySelector('button');
+  const input=document.querySelector('input');
+  if(!btn||!input) return;
+  btn.addEventListener('click',()=>{
+    const url=input.value;
+    if(!url) return;
+    const res=analyserLien(url);
+    const bar=document.getElementById('protect-bar');
+    const fill=document.getElementById('protect-fill');
+    bar.style.display='block';
+    fill.style.width=res.score+'%';
+    fill.textContent=res.score+'% '+ (res.score>=60?'VRAI ✅':'FAUX ❌');
+    fill.style.background=res.score>=60?'#00c853':'#d50000';
+    document.body.classList.remove('protect-danger','protect-safe');
+    if(res.score>=60){
+      document.body.classList.add('protect-safe');
+      sonBon();
+    }else{
+      document.body.classList.add('protect-danger');
+      sonDanger();
+      if(navigator.vibrate) navigator.vibrate([200,100,200]);
+    }
+    let zone=document.getElementById('protect-raisons');
+    if(!zone){zone=document.createElement('div');zone.id='protect-raisons';bar.after(zone);}
+    zone.innerHTML='<b>Analyse:</b><br>'+res.raisons.join('<br>')+'<br><b>Score: '+res.score+'%</b>';
+    setTimeout(()=>{document.body.classList.remove('protect-danger','protect-safe');},3000);
+  });
 });
 </script>
 </body>
-</html>
+
+
+
+</html><!-- rebuild -->
