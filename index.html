@@ -1,77 +1,73 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-<link rel="manifest" href="manifest.json">
-<meta name="theme-color" content="#00ff88">
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <title>SOC KINSHASA</title>
-
-
-
 <style>
-#protect-bar{width:100%;height:22px;background:#ddd;border-radius:20px;overflow:hidden;margin:12px 0;display:none}
-#protect-fill{height:100%;width:0%;background:#00c853;transition:width 0.5s;text-align:center;color:white;font-weight:bold;font-size:13px;line-height:22px}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:Arial,sans-serif;background:white;min-height:100vh;display:flex;flex-direction:column}
+header{background:#22242a;color:white;padding:16px;text-align:center;font-size:22px;font-weight:bold;letter-spacing:1px}
+header small{display:block;font-size:13px;font-weight:normal;color:#ccc;margin-top:4px}
+main{flex:1;padding:20px;text-align:center}
+main h2{font-size:19px;margin-bottom:8px}
+main p{color:#555;font-size:14px;margin-bottom:15px}
+input{width:92%;max-width:420px;padding:14px;font-size:16px;border-radius:10px;border:2px solid #22242a;outline:none}
+button{margin-top:12px;padding:14px 28px;font-size:18px;background:#22242a;color:white;border:none;border-radius:10px}
+#protect-bar{width:92%;max-width:420px;height:28px;background:#eee;border-radius:20px;overflow:hidden;margin:16px auto;display:none}
+#protect-fill{height:100%;width:0%;background:#00c853;color:white;font-weight:bold;line-height:28px;font-size:14px;transition:width 0.5s}
+#protect-raisons{background:#f7f7f7;padding:12px;border-radius:10px;max-width:420px;margin:10px auto;text-align:left;display:none;color:#111;font-size:14px}
+footer{background:#00e676;height:42px;width:100%}
 body.protect-danger{background:#d50000 !important}
+body.protect-danger main *{color:white !important}
+body.protect-danger #protect-raisons, body.protect-danger #protect-raisons *{color:#111 !important}
 body.protect-safe{background:#00c853 !important}
-body.protect-danger *, body.protect-safe *{color:white !important}
+body.protect-safe main *{color:white !important}
+body.protect-safe #protect-raisons, body.protect-safe #protect-raisons *{color:#111 !important}
 </style>
+</head>
+<body>
+<header>SOC KINSHASA<small>🛡️ EMMANUEL PROTECT - Vérifie avant de cliquer</small></header>
+<main>
+<h2>Colle un lien, on te dit si c'est vrai ou faux</h2>
+<p>Protège Kinshasa contre les arnaques</p>
+<input id="lien" type="text" placeholder="Colle le lien ici... ex: https://google.com">
+<br>
+<button id="btn">VÉRIFIER</button>
 <div id="protect-bar"><div id="protect-fill">0%</div></div>
+<div id="protect-raisons"></div>
+</main>
+<footer></footer>
 <script>
-// EMMANUEL PROTECT V4 - POURCENTAGE VRAI / FAUX
 let audioCtx=null;
 function bip(f,t,d,quand){try{if(!audioCtx)audioCtx=new(window.AudioContext||window.webkitAudioContext)();if(audioCtx.state==='suspended')audioCtx.resume();const tm=audioCtx.currentTime+quand;const o=audioCtx.createOscillator();const g=audioCtx.createGain();o.connect(g);g.connect(audioCtx.destination);o.frequency.value=f;o.type=t;g.gain.setValueAtTime(0.12,tm);g.gain.exponentialRampToValueAtTime(0.001,tm+d);o.start(tm);o.stop(tm+d);}catch(e){}}
 function sonDanger(){bip(220,'square',0.25,0);bip(180,'square',0.3,0.35);}
 function sonBon(){bip(700,'sine',0.4,0);}
-
-function analyserLien(url){
-  url=url.toLowerCase().trim();
-  let score=100; let raisons=[];
-  if(!url.startsWith('https://')){score-=25;raisons.push('Pas de HTTPS');}
-  if(url.includes('bit.ly')||url.includes('tinyurl')||url.includes('t.me')||url.includes('cutt.ly')){score-=30;raisons.push('Lien raccourci suspect');}
-  if(/\d+\.\d+\.\d+\.\d+/.test(url)){score-=35;raisons.push('Adresse IP au lieu de nom');}
-  if(url.includes('free')||url.includes('gratuit')||url.includes('gagner')||url.includes('cadeau')||url.includes('crypto-double')){score-=25;raisons.push('Mot arnaque: gratuit/cadeau');}
-  if(url.includes('login')||url.includes('verify')||url.includes('confirm')||url.includes('account-suspended')){score-=20;raisons.push('Faux login / vérification');}
-  if(url.split('.').length>4){score-=15;raisons.push('Trop de sous-domaines');}
-  if(url.length>80){score-=10;raisons.push('Lien trop long');}
-  if(url.includes('.tk')||url.includes('.ml')||url.includes('.xyz')||url.includes('.top')){score-=20;raisons.push('Extension suspecte');}
-  if(url.includes('facebook.com')||url.includes('instagram.com')||url.includes('google.com')||url.includes('whatsapp.com')||url.includes('airtel')||url.includes('vodacom')){score+=10;raisons.push('Domaine connu');}
-  score=Math.max(0,Math.min(100,score));
-  return {score, raisons};
+function analyser(url){
+  url=url.toLowerCase().trim(); let score=100; let raisons=[];
+  if(!url.startsWith('https://')){score-=25;raisons.push('❌ Pas de HTTPS');}
+  if(url.includes('bit.ly')||url.includes('tinyurl')||url.includes('cutt.ly')){score-=30;raisons.push('❌ Lien raccourci suspect');}
+  if(url.includes('free')||url.includes('gratuit')||url.includes('gagner')||url.includes('cadeau')){score-=25;raisons.push('❌ Mot arnaque: gratuit/cadeau');}
+  if(url.includes('login')||url.includes('verify')||url.includes('confirm')){score-=20;raisons.push('❌ Faux login / vérification');}
+  if(url.includes('.tk')||url.includes('.ml')||url.includes('.xyz')||url.includes('.top')){score-=20;raisons.push('❌ Extension suspecte');}
+  if(url.includes('facebook.com')||url.includes('instagram.com')||url.includes('google.com')||url.includes('whatsapp.com')){score+=10;raisons.push('✅ Domaine connu');}
+  if(raisons.length===0) raisons.push('✅ Aucun signal suspect');
+  return {score:Math.max(0,Math.min(100,score)), raisons};
 }
-
-document.addEventListener('DOMContentLoaded',()=>{
-  const btn=document.querySelector('button');
-  const input=document.querySelector('input');
-  if(!btn||!input) return;
-  btn.addEventListener('click',()=>{
-    const url=input.value;
-    if(!url) return;
-    const res=analyserLien(url);
-    const bar=document.getElementById('protect-bar');
-    const fill=document.getElementById('protect-fill');
-    bar.style.display='block';
-    fill.style.width=res.score+'%';
-    fill.textContent=res.score+'% '+ (res.score>=60?'VRAI ✅':'FAUX ❌');
-    fill.style.background=res.score>=60?'#00c853':'#d50000';
-    document.body.classList.remove('protect-danger','protect-safe');
-    if(res.score>=60){
-      document.body.classList.add('protect-safe');
-      sonBon();
-    }else{
-      document.body.classList.add('protect-danger');
-      sonDanger();
-      if(navigator.vibrate) navigator.vibrate([200,100,200]);
-    }
-    let zone=document.getElementById('protect-raisons');
-    if(!zone){zone=document.createElement('div');zone.id='protect-raisons';bar.after(zone);}
-    zone.innerHTML='<b>Analyse:</b><br>'+res.raisons.join('<br>')+'<br><b>Score: '+res.score+'%</b>';
-    setTimeout(()=>{document.body.classList.remove('protect-danger','protect-safe');},3000);
-  });
+document.getElementById('btn').addEventListener('click',()=>{
+  const url=document.getElementById('lien').value;
+  if(!url){alert('Colle d’abord un lien !');return;}
+  const res=analyser(url);
+  const bar=document.getElementById('protect-bar'); const fill=document.getElementById('protect-fill'); const zone=document.getElementById('protect-raisons');
+  bar.style.display='block'; zone.style.display='block';
+  fill.style.width=res.score+'%'; fill.textContent=res.score+'% '+(res.score>=60?'VRAI ✅':'FAUX ❌');
+  fill.style.background=res.score>=60?'#00c853':'#d50000';
+  document.body.classList.remove('protect-danger','protect-safe');
+  if(res.score>=60){document.body.classList.add('protect-safe');sonBon();}
+  else{document.body.classList.add('protect-danger');sonDanger();if(navigator.vibrate)navigator.vibrate([200,100,200]);}
+  zone.innerHTML='<b>Analyse:</b><br>'+res.raisons.join('<br>')+'<br><br><b>Score: '+res.score+'%</b>';
+  setTimeout(()=>{document.body.classList.remove('protect-danger','protect-safe');},3000);
 });
 </script>
 </body>
-
-
-
-</html><!-- rebuild -->
+</html>
