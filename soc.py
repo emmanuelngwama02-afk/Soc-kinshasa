@@ -6,7 +6,7 @@ def analyser(lien):
     l = lien.lower()
     score = 0
     raisons = []
-    if "faceb00k" in l or "0" in l.replace("https://","").split("/")[0]:
+    if "faceb00k" in l:
         score += 40
         raisons.append("0 a la place de o")
     if "gratuit" in l or "free" in l or "cadeau" in l or "gagne" in l:
@@ -29,7 +29,7 @@ class S(BaseHTTPRequestHandler):
         self.send_response(200)
         self.send_header('Content-type', 'text/html; charset=utf-8')
         self.end_headers()
-        self.wfile.write(b"<h1>MON SOC - KINSHASA</h1><p>Colle un lien suspect avant de cliquer</p><form method='POST'><input name='lien' placeholder='Colle lien suspect' style='width:300px'><button>Analyser + Signaler</button></form>")
+        self.wfile.write("<h1>MON SOC - KINSHASA</h1><p>Colle un lien suspect avant de cliquer</p><form method='POST'><input name='lien' placeholder='Colle lien suspect' style='width:300px'><button>Analyser + Signaler</button></form>".encode())
     def do_POST(self):
         taille = int(self.headers['Content-Length'])
         data = self.rfile.read(taille).decode()
@@ -45,4 +45,5 @@ class S(BaseHTTPRequestHandler):
         pass
 
 PORT = int(os.environ.get("PORT", 8000))
+print(f"SOC lance sur port {PORT}")
 HTTPServer(('0.0.0.0', PORT), S).serve_forever()
