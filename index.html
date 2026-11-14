@@ -70,4 +70,5 @@ setTimeout(cacherBoutonInstall, 1000);
 setTimeout(cacherBoutonInstall, 2000);
 </script>
 </body>
-</html>
+</html><div id="up" style="display:none;position:fixed;top:0;left:0;right:0;background:#FF9800;color:#fff;padding:12px;text-align:center;z-index:99999;font-weight:bold">Nouvelle version ! <button onclick="location.reload(true)" style="background:#fff;color:#FF9800;border:none;padding:6px 14px;border-radius:20px;font-weight:bold">METTRE A JOUR</button></div>
+<script>fetch('version.txt?v='+Date.now()).then(r=>r.text()).then(v=>{if(localStorage.v&&localStorage.v.trim()!=v.trim())document.getElementById('up').style.display='block';localStorage.v=v})</script>
