@@ -1,7 +1,8 @@
 {
   "name": "NGWAMA SHIELD - SOC Kinshasa",
   "short_name": "NGWAMA SHIELD",
-  "start_url": "./index.html",
+  "start_url": "/Soc-kinshasa/index.html",
+  "scope": "/Soc-kinshasa/",
   "display": "standalone",
   "background_color": "#070B09",
   "theme_color": "#070B09",
