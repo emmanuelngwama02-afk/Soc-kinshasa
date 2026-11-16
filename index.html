@@ -202,7 +202,39 @@ var dico=[
 ["Signaler","Loba"],
 ["Partager","Kabola"],
 ["PARTAGE","KABOLA"],
-["ANALYSER MAINTENANT","TALELA SIKOYO"]
+["ANALYSER MAINTENANT","TALELA SIKOYO"],
+["Dangereux","Ya mabe"],
+["DANGER","MABE"],
+["Ce lien est dangereux","Lien oyo eza ya mabe"],
+["Ne clique pas","Ko finya te"],
+["Ne cliquez pas","Ko finya te"],
+["Lien sûr","Lien ya solo"],
+["Sûr","Ya solo"],
+["SUR","YA SOLO"],
+["Ce lien semble sûr","Lien oyo eza ya solo"],
+["Tu peux cliquer","Okoki ko finya"],
+["Suspect","Ya lokuta"],
+["SUSPECT","YA LOKUTA"],
+["Attention","Keba"],
+["Ce lien est suspect","Lien oyo eza ya lokuta"],
+["Analyse en cours","Tozo talela..."],
+["Vérification en cours","Tozo talela..."],
+["Résultat","Epayi"],
+["Lien analysé","Lien oyo to taleli"],
+["Merci","Matondi"],
+["Tu as protege Kinshasa","O bateli Kinshasa"],
+["Colle dabord le message","Tia message nanu"],
+["Colle un lien","Tia lien"],
+["Entrez un lien","Tia lien"],
+["Le lien est vide","Lien eza pamba"],
+["Partager","Kabola"],
+["Copié","Ekopiami"],
+["Lien copié","Lien ekopiami"],
+["Score","Note"],
+["Risque","Likama"],
+["Faible","Moké"],
+["Élevé","Monene"],
+["Moyen","Ya katikati"]
 ];
 function tradNode(node){
   if(node.nodeType==3){
@@ -222,6 +254,22 @@ function toggleLang(){
   var inp=document.querySelector("input[placeholder*='google']");
   if(inp) inp.placeholder=langFR?"Ex : https://google.com":"Ndakisa : https://google.com";
 }
+</script>
+
+<script>
+// Surveillant : dès qu'un nouveau résultat apparait, on le traduit en Lingala si on est en Lingala
+var obs = new MutationObserver(function(){
+  if(!langFR){ tradNode(document.body); }
+});
+obs.observe(document.body, {childList:true, subtree:true, characterData:true});
+function alertLingala(msgFR, msgLN){
+  alert(langFR ? msgFR : msgLN);
+}
+// On sauvegarde la langue
+var oldToggle = toggleLang;
+toggleLang = function(){ oldToggle(); localStorage.setItem("lang", langFR?"FR":"LN"); };
+// Au chargement, si on était en Lingala, on remet en Lingala
+if(localStorage.getItem("lang")=="LN" && langFR){ setTimeout(function(){ toggleLang(); }, 800); }
 </script>
 </body>
 </html>
