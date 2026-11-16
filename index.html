@@ -266,5 +266,39 @@ document.addEventListener('DOMContentLoaded', enleveBarreBas);
 setTimeout(enleveBarreBas, 500);
 setTimeout(enleveBarreBas, 1500);
 </script>
+
+<script>
+function metPhishingEnBas(){
+  var all = document.querySelectorAll('div, section');
+  var cible = null;
+  for(var i=0;i<all.length;i++){
+    if(all[i].textContent.includes('Signes de phishing') && all[i].textContent.includes('Cadeau gratuit')){
+      // On prend le plus petit bloc qui contient tout
+      if(!cible || all[i].textContent.length < cible.textContent.length){
+        cible = all[i];
+      }
+    }
+  }
+  if(cible){
+    cible.id = 'bloc-phishing-bas';
+    cible.style.marginTop = '20px';
+    cible.style.order = '99';
+    // On le met tout en bas, juste avant le menu
+    var drawer = document.getElementById('drawer');
+    if(drawer){
+      document.body.insertBefore(cible, drawer);
+    } else {
+      document.body.appendChild(cible);
+    }
+  }
+  // On enlève aussi le bouton PARTAGE vert qui traîne encore en bas
+  document.querySelectorAll('div, button').forEach(function(el){
+    if(el.textContent.trim()=='PARTAGE' && el.style.position=='fixed') el.remove();
+    if((el.textContent||'').trim()=='PARTAGE' && el.children.length==0) el.remove();
+  });
+}
+document.addEventListener('DOMContentLoaded', metPhishingEnBas);
+setTimeout(metPhishingEnBas, 800);
+</script>
 </body>
 </html>
