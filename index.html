@@ -98,5 +98,40 @@ function verifIA(){
   r.style.display='block';
 }
 </script>
+
+<script>
+function envoieVersIA(){
+  // On cherche le champ du haut (lien)
+  var inputs = document.querySelectorAll('input');
+  var champHaut = inputs[0];
+  if(!champHaut) return;
+  var val = champHaut.value.trim();
+  if(!val) return;
+  // Si ce n'est PAS un lien (pas de . ni http), c'est un message -> on l'envoie à l'IA
+  var cestUnLien = val.includes('http') || val.includes('.') && val.includes('/') || val.includes('.com') || val.includes('.cd');
+  if(!cestUnLien){
+    var champIA = document.getElementById('msgIA');
+    if(champIA){
+      champIA.value = val;
+      champIA.scrollIntoView({behavior:'smooth', block:'center'});
+      // On lance l'IA tout seul
+      setTimeout(function(){ verifIA(); }, 500);
+    }
+    return true;
+  }
+  return false;
+}
+// On intercepte le bouton ANALYSER en haut
+document.addEventListener('click', function(e){
+  if(e.target && e.target.textContent && e.target.textContent.includes('ANALYSER')){
+    var v = document.querySelectorAll('input')[0].value.trim();
+    if(v && !v.includes('http') && !v.includes('.com') && !v.includes('.cd') && !v.includes('www')){
+      e.preventDefault(); e.stopPropagation();
+      envoieVersIA();
+      alert('Ce n\'est pas un lien, je l\'ai envoyé à l\'IA en bas 🤖');
+    }
+  }
+}, true);
+</script>
 </body>
 </html>
