@@ -142,3 +142,16 @@ if(v=='tiktok') r.innerHTML='TIKTOK: Profil > Parametres > Signaler un probleme 
 if(v=='instagram') r.innerHTML='INSTAGRAM: Mot de passe oublie > Vous ne pouvez pas reinitialiser ? > Instagram te demandera une video de ton visage.';
 }
 </script>
+<script>
+function aidePirate(){
+var v=document.getElementById('type-pirate').value;
+var r=document.getElementById('res-pirate');
+r.style.display='block';
+var btn='style="display:block;background:#ff3d00;color:white;text-align:center;padding:12px;border-radius:10px;text-decoration:none;margin-top:10px;font-weight:bold"';
+if(v=='facebook') r.innerHTML='FACEBOOK PIRATE :<br><br>1. Clique sur le bouton rouge en bas<br>2. Mets ton numero<br>3. Change ton mot de passe<br><br><a href="https://www.facebook.com/hacked" '+btn+'>👉 CLIQUER POUR RECUPERER FACEBOOK</a>';
+if(v=='whatsapp') r.innerHTML='WHATSAPP PIRATE :<br><br>1. Desinstalle et reinstalle WhatsApp<br>2. Remets ton numero, mets le code SMS recu<br>3. Le pirate sera deconnecte direct<br>4. Ne donne JAMAIS ton code a 6 chiffres !<br><br><a href="https://www.whatsapp.com" '+btn+'>👉 OUVRIR WHATSAPP</a>';
+if(v=='gmail') r.innerHTML='GMAIL PIRATE :<br><br>1. Clique sur le bouton rouge<br>2. Mets ton email<br>3. Change ton mot de passe<br><br><a href="https://accounts.google.com/signin/recovery" '+btn+'>👉 CLIQUER POUR RECUPERER GMAIL</a>';
+if(v=='tiktok') r.innerHTML='TIKTOK PIRATE :<br><br>1. Profil > Parametres > Signaler un probleme<br>2. Choisis Compte pirate<br><br><a href="https://www.tiktok.com/legal/report" '+btn+'>👉 SIGNALER SUR TIKTOK</a>';
+if(v=='instagram') r.innerHTML='INSTAGRAM PIRATE :<br><br>1. Sur connexion, clique Mot de passe oublie<br>2. Clique "Vous ne pouvez pas reinitialiser ?"<br>3. Instagram te demandera une video de ton visage<br><br><a href="https://www.instagram.com/accounts/password/reset/" '+btn+'>👉 RECUPERER INSTAGRAM</a>';
+}
+</script>
