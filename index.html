@@ -133,17 +133,45 @@ document.addEventListener('click', function(e){
   }
 }, true);
 </script>
-<div id="section-signaler" style="margin:15px;padding:15px;border:1px solid #ddd;border-radius:15px"><h3 id="t-signaler">🚨 Signaler une arnaque</h3><p id="p-signaler" style="font-size:13px">Tu as recu un faux message ? Aide les autres.</p><textarea id="signal-text" placeholder="Colle le message suspect ici..." style="width:100%;height:80px;padding:10px;border-radius:10px"></textarea><input id="signal-num" placeholder="Numero arnaqueur ex: 081..." style="width:100%;padding:10px;margin-top:8px;border-radius:10px" /><button onclick="signalerArnaque()" style="background:#FF3B30;color:#fff;border:none;width:100%;padding:13px;border-radius:25px;font-weight:bold;margin-top:10px">🚨 SIGNALER MAINTENANT</button><div id="signal-list" style="margin-top:12px;font-size:13px"></div></div><script>function toggleDark(){document.body.classList.toggle("dark");document.getElementById("btn-dark").textContent=document.body.classList.contains("dark")?"☀️ Clair":"🌙 Sombre";localStorage.setItem("dark",document.body.classList.contains("dark"))} if(localStorage.getItem("dark")=="true"){document.body.classList.add("dark")} var langFR=true; function toggleLang(){langFR=!langFR; document.getElementById("btn-lang").textContent=langFR?"🌍 FR / LINGALA":"🌍 LINGALA / FR"; document.getElementById("nav-acc").textContent=langFR?"Accueil":"Ndaku"; document.getElementById("nav-ver").textContent=langFR?"Vérifier":"Talela"; document.getElementById("nav-sig").textContent=langFR?"Signaler":"Loba"; document.getElementById("t-signaler").textContent=langFR?"🚨 Signaler une arnaque":"🚨 Loba lokuta"; document.getElementById("p-signaler").textContent=langFR?"Tu as recu un faux message ? Aide les autres.":"Ozui message ya lokuta? Sungisa baninga."} function goIA(){var e=document.getElementById("msgIA"); if(e){e.scrollIntoView({behavior:"smooth",block:"center"}); e.focus()}} function goSignaler(){var e=document.getElementById("section-signaler"); if(e) e.scrollIntoView({behavior:"smooth",block:"center"})} function signalerArnaque(){var m=document.getElementById("signal-text").value.trim(); var n=document.getElementById("signal-num").value.trim(); if(!m){alert("Colle dabord le message");return} var l=JSON.parse(localStorage.getItem("signals")||"[]"); l.unshift({msg:m,num:n}); localStorage.setItem("signals",JSON.stringify(l)); document.getElementById("signal-text").value=""; document.getElementById("signal-num").value=""; afficherSignals(); alert("Merci 🙏 Tu as protege Kinshasa !")} function afficherSignals(){var l=JSON.parse(localStorage.getItem("signals")||"[]"); var d=document.getElementById("signal-list"); if(!d) return; if(l.length==0){d.innerHTML="";return} d.innerHTML="<b>Deja signales ("+l.length+") :</b><br>"+l.slice(0,3).map(x=>"<div style=\"background:#ffecec;padding:8px;border-radius:10px;margin-top:6px\">🚨 <b>"+(x.num||"Numero inconnu")+"</b><br>"+x.msg.substring(0,80)+"...</div>").join("")} afficherSignals();</script><script>var oldV=window.verifIA; if(oldV){window.verifIA=function(){oldV(); setTimeout(function(){var b=document.getElementById("badge-secu"); if(b && document.body.innerText.includes("SÛR")){b.style.display="block"; b.scrollIntoView({behavior:"smooth",block:"center"})}},500)}} </script>
-<div id="v3-float" style="position:fixed;top:8px;right:8px;z-index:100000;display:flex;gap:6px">
-<button onclick="toggleDark()" id="btn-dark" style="background:#000;color:#fff;border:2px solid #fff;padding:8px 10px;border-radius:20px;font-weight:bold;font-size:13px;box-shadow:0 2px 8px rgba(0,0,0,0.4)">🌙 Sombre</button>
-<button onclick="toggleLang()" id="btn-lang" style="background:#fff;color:#000;border:2px solid #000;padding:8px 10px;border-radius:20px;font-weight:bold;font-size:13px;box-shadow:0 2px 8px rgba(0,0,0,0.4)">🌍 FR / LINGALA</button>
-</div>
-<style>body.dark{background:#111!important} body.dark div{background:#1a1a1a!important;color:#fff!important} body.dark input,body.dark textarea{background:#222!important;color:#fff!important}</style>
+<div id="section-signaler" style="margin:15px;padding:15px;border:1px solid #ddd;border-radius:15px"><h3 id="t-signaler">🚨 Signaler une arnaque</h3><p id="p-signaler" style="font-size:13px">Tu as recu un faux message ? Aide les autres.</p><textarea id="signal-text" placeholder="Colle le message suspect ici..." style="width:100%;height:80px;padding:10px;border-radius:10px"></textarea><input id="signal-num" placeholder="Numero arnaqueur ex: 081..." style="width:100%;padding:10px;margin-top:8px;border-radius:10px" /><button onclick="signalerArnaque()" style="background:#FF3B30;color:#fff;border:none;width:100%;padding:13px;border-radius:25px;font-weight:bold;margin-top:10px">🚨 SIGNALER MAINTENANT</button><div id="signal-list" style="margin-top:12px;font-size:13px"></div></div><script>function toggleDark(){document.body.classList.toggle("dark");document.getElementById("btn-dark").textContent=document.body.classList.contains("dark")?"☀️ Clair":"🌙 Sombre";localStorage.setItem("dark",document.body.classList.contains("dark"))} if(localStorage.getItem("dark")=="true"){document.body.classList.add("dark")} var langFR=true; 
+</script>
+
 <script>
-function toggleDark(){document.body.classList.toggle("dark"); var b=document.getElementById("btn-dark"); b.textContent=document.body.classList.contains("dark")?"☀️ Clair":"🌙 Sombre"; localStorage.setItem("dark",document.body.classList.contains("dark"))}
-if(localStorage.getItem("dark")=="true"){document.body.classList.add("dark"); setTimeout(function(){var b=document.getElementById("btn-dark"); if(b) b.textContent="☀️ Clair"},500)}
 var langFR=true;
-function toggleLang(){langFR=!langFR; document.getElementById("btn-lang").textContent=langFR?"🌍 FR / LINGALA":"🌍 LINGALA / FR"; var a=document.getElementById("nav-acc"); if(a) a.textContent=langFR?"Accueil":"Ndaku"; var v=document.getElementById("nav-ver"); if(v) v.textContent=langFR?"Vérifier":"Talela"; var s=document.getElementById("nav-sig"); if(s) s.textContent=langFR?"Signaler":"Loba"; alert(langFR?"Langue: Français":"Langue: Lingala - Ndaku = Accueil, Talela = Vérifier, Loba = Signaler")}
+var dico=[
+["Colle un lien","Tia lien"],
+["avant de cliquer","yambo o cliquer"],
+["On vérifie si le lien est vrai ou faux en 1 seconde","Tozo talela soki lien eza ya solo to ya lokuta na seconde moko"],
+["ANALYSER MAINTENANT","TALELA SIKOYO"],
+["Signes de phishing","Bilembo ya lokuta"],
+["Cadeau gratuit / gagner","Cadeau ya ofele / kolonga"],
+["On te demande mot de passe urgent","Bazo senga mot de passe na pressé"],
+["Lien bizarre bit.ly","Lien ya ndengé na ndengé"],
+["Faute dans le nom du site","Mabe na kombo ya site"],
+["BESOIN D'AIDE","OSENGI LISUNGI"],
+["Si vous voulez me contacter","Soki olingi o contacter ngai"],
+["Analyses","Botaleli"],
+["En ligne","Na ligne"],
+["Signaler une arnaque","Loba lokuta"],
+["Tu as recu un faux message","Ozui message ya lokuta"]
+];
+function toggleLang(){
+ langFR=!langFR;
+ document.getElementById("btn-lang").textContent=langFR?"🌍 FR / LINGALA":"🌍 LINGALA / FR";
+ var els=document.querySelectorAll("body *");
+ els.forEach(function(e){
+   if(e.children.length==0 && e.textContent.trim().length>2){
+     var txt=e.textContent;
+     for(var i=0;i<dico.length;i++){
+       if(langFR==false && txt.includes(dico[i][0])){ e.textContent=txt.replace(dico[i][0], dico[i][1]); break; }
+       if(langFR==true && txt.includes(dico[i][1])){ e.textContent=txt.replace(dico[i][1], dico[i][0]); break; }
+     }
+   }
+ });
+ // Le bouton Analyser et le titre principal
+ var btn=document.querySelector("button");
+ if(!langFR){ document.title="NGWAMA SHIELD - Lingala"; } else { document.title="NGWAMA SHIELD"; }
+}
 </script>
 </body>
 </html>
