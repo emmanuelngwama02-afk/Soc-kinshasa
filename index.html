@@ -237,5 +237,34 @@ function toggleLangMenu(){
   alert(langMenu=='LN' ? 'Mode Lingala activé pour le menu !\nOn fera la version Lingala complète après.' : 'Mode Français activé !');
 }
 </script>
+
+<style>
+/* On enlève la barre du bas, on garde seulement le menu */
+nav, .bottom-nav, .bottom-bar, #bottom-nav, #bottom-bar { display:none !important; }
+</style>
+<script>
+// On enlève la barre du bas dès que la page s'ouvre
+function enleveBarreBas(){
+  var all = document.querySelectorAll('div, nav, footer');
+  all.forEach(function(el){
+    var txt = el.textContent || '';
+    // Si un bloc contient les 4 en même temps, c'est la barre du bas
+    if(txt.includes('Accueil') && txt.includes('Vérifier') && txt.includes('Signaler') && txt.includes('Partage')){
+      // On vérifie que c'est bien un petit bloc en bas, pas tout le body
+      if(el.children.length < 6 && el.textContent.length < 200){
+        el.style.display='none';
+        el.remove();
+      }
+    }
+  });
+  // Sécurité : on enlève aussi tout ce qui est collé en bas
+  document.querySelectorAll('[style*="position:fixed"][style*="bottom:0"], [style*="position: fixed"][style*="bottom: 0"]').forEach(function(el){
+    if((el.textContent||'').includes('Accueil')) el.remove();
+  });
+}
+document.addEventListener('DOMContentLoaded', enleveBarreBas);
+setTimeout(enleveBarreBas, 500);
+setTimeout(enleveBarreBas, 1500);
+</script>
 </body>
 </html>
