@@ -133,7 +133,7 @@ document.addEventListener('click', function(e){
   }
 }, true);
 </script>
-<div id="section-signaler" style="margin:15px;padding:15px;border:1px solid #ddd;border-radius:15px"><h3 id="t-signaler">🚨 Signaler une arnaque</h3><p id="p-signaler" style="font-size:13px">Tu as recu un faux message ? Aide les autres.</p><textarea id="signal-text" placeholder="Colle le message suspect ici..." style="width:100%;height:80px;padding:10px;border-radius:10px"></textarea><input id="signal-num" placeholder="Numero arnaqueur ex: 081..." style="width:100%;padding:10px;margin-top:8px;border-radius:10px" /><button onclick="signalerArnaque()" style="background:#FF3B30;color:#fff;border:none;width:100%;padding:13px;border-radius:25px;font-weight:bold;margin-top:10px">🚨 SIGNALER MAINTENANT</button><div id="signal-list" style="margin-top:12px;font-size:13px"></div></div><script>function toggleDark(){document.body.classList.toggle("dark");document.getElementById("btn-dark").textContent=document.body.classList.contains("dark")?"☀️ Clair":"🌙 Sombre";localStorage.setItem("dark",document.body.classList.contains("dark"))} if(localStorage.getItem("dark")=="true"){document.body.classList.add("dark")} var langFR=true; 
+<script>function toggleDark(){document.body.classList.toggle("dark");document.getElementById("btn-dark").textContent=document.body.classList.contains("dark")?"☀️ Clair":"🌙 Sombre";localStorage.setItem("dark",document.body.classList.contains("dark"))} if(localStorage.getItem("dark")=="true"){document.body.classList.add("dark")} var langFR=true; 
 </script>
 
 <script>
@@ -172,6 +172,38 @@ function toggleLang(){
  var btn=document.querySelector("button");
  if(!langFR){ document.title="NGWAMA SHIELD - Lingala"; } else { document.title="NGWAMA SHIELD"; }
 }
+</script>
+
+<div id="v3-float" style="position:fixed;top:8px;right:8px;z-index:100000;display:flex;gap:6px">
+<button onclick="toggleDark()" id="btn-dark" style="background:#000;color:#fff;border:2px solid #fff;padding:8px 10px;border-radius:20px;font-weight:bold;font-size:13px">🌙 Sombre</button>
+<button onclick="toggleLang()" id="btn-lang" style="background:#fff;color:#000;border:2px solid #000;padding:8px 10px;border-radius:20px;font-weight:bold;font-size:13px">🌍 FR / LINGALA</button>
+</div>
+<div id="section-signaler" style="margin:15px;padding:15px;border:1px solid #ddd;border-radius:15px;background:#fff">
+<h3 id="t-signaler">🚨 Signaler une arnaque</h3>
+<p id="p-signaler" style="font-size:13px">Tu as recu un faux message ? Aide les autres.</p>
+<textarea id="signal-text" placeholder="Colle le message suspect ici..." style="width:100%;height:80px;padding:10px;border-radius:10px"></textarea>
+<input id="signal-num" placeholder="Numero arnaqueur ex: 081..." style="width:100%;padding:10px;margin-top:8px;border-radius:10px" />
+<button onclick="signalerArnaque()" style="background:#FF3B30;color:#fff;border:none;width:100%;padding:13px;border-radius:25px;font-weight:bold;margin-top:10px">🚨 SIGNALER MAINTENANT</button>
+<div id="signal-list" style="margin-top:12px;font-size:13px"></div>
+</div>
+<div class="bottom-nav" style="position:fixed;bottom:0;left:0;right:0;background:#fff;display:flex;justify-content:space-around;padding:10px 0 14px;border-top:1px solid #ddd;z-index:99999">
+<button onclick="window.scrollTo({top:0,behavior:'smooth'})" style="background:none;border:none;font-size:22px">🏠<span id="nav-acc" style="display:block;font-size:11px;font-weight:bold">Accueil</span></button>
+<button onclick="goIA()" style="background:none;border:none;font-size:22px">🤖<span id="nav-ver" style="display:block;font-size:11px;font-weight:bold">Vérifier</span></button>
+<button onclick="goSignaler()" style="background:none;border:none;font-size:22px">🚨<span id="nav-sig" style="display:block;font-size:11px;font-weight:bold">Signaler</span></button>
+<button onclick="partagerApp()" style="background:none;border:none;font-size:22px">📤<span style="display:block;font-size:11px;font-weight:bold">Partager</span></button>
+</div>
+<style>body.dark{background:#111!important} body.dark div{background:#1a1a1a!important;color:#fff!important} body.dark input,body.dark textarea{background:#222!important;color:#fff!important} body{padding-bottom:75px!important}</style>
+<script>
+function toggleDark(){document.body.classList.toggle("dark"); document.getElementById("btn-dark").textContent=document.body.classList.contains("dark")?"☀️ Clair":"🌙 Sombre"; localStorage.setItem("dark",document.body.classList.contains("dark"))}
+if(localStorage.getItem("dark")=="true"){document.body.classList.add("dark")}
+var langFR=true;
+var dico=[["Colle un lien","Tia lien"],["avant de cliquer","yambo o cliquer"],["ANALYSER MAINTENANT","TALELA SIKOYO"],["Signes de phishing","Bilembo ya lokuta"],["BESOIN D'AIDE","OSENGI LISUNGI"],["Si vous voulez me contacter","Soki olingi o contacter ngai"]];
+function toggleLang(){langFR=!langFR; document.getElementById("btn-lang").textContent=langFR?"🌍 FR / LINGALA":"🌍 LINGALA / FR"; var els=document.querySelectorAll("body *"); els.forEach(function(e){ if(e.children.length==0 && e.textContent.trim().length>2){ var txt=e.textContent; for(var i=0;i<dico.length;i++){ if(!langFR && txt.includes(dico[i][0])){e.textContent=txt.replace(dico[i][0],dico[i][1]); break;} if(langFR && txt.includes(dico[i][1])){e.textContent=txt.replace(dico[i][1],dico[i][0]); break;} } } });}
+function goIA(){var e=document.querySelector("input"); if(e){e.scrollIntoView({behavior:"smooth",block:"center"}); e.focus()}}
+function goSignaler(){var e=document.getElementById("section-signaler"); if(e) e.scrollIntoView({behavior:"smooth",block:"center"})}
+function signalerArnaque(){var m=document.getElementById("signal-text").value.trim(); var n=document.getElementById("signal-num").value.trim(); if(!m){alert("Colle dabord le message");return} var l=JSON.parse(localStorage.getItem("signals")||"[]"); l.unshift({msg:m,num:n}); localStorage.setItem("signals",JSON.stringify(l)); document.getElementById("signal-text").value=""; document.getElementById("signal-num").value=""; afficherSignals(); alert("Merci 🙏 Tu as protege Kinshasa !")}
+function afficherSignals(){var l=JSON.parse(localStorage.getItem("signals")||"[]"); var d=document.getElementById("signal-list"); if(!d) return; if(l.length==0){d.innerHTML="";return} d.innerHTML="<b>Deja signales ("+l.length+") :</b><br>"+l.slice(0,3).map(x=>"<div style=\"background:#ffecec;padding:8px;border-radius:10px;margin-top:6px\">🚨 <b>"+(x.num||"Numero inconnu")+"</b><br>"+x.msg.substring(0,80)+"...</div>").join("")}
+afficherSignals();
 </script>
 </body>
 </html>
