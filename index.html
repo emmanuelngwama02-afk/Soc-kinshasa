@@ -337,5 +337,40 @@ document.addEventListener('DOMContentLoaded', metFooterEnBas);
 setTimeout(metFooterEnBas, 500);
 setTimeout(metFooterEnBas, 1500);
 </script>
+
+<script>
+function ordreFinal(){
+  var phishing = document.getElementById('bloc-phishing-bas');
+  var footer = document.getElementById('footer-vrai-bas');
+  // Si on ne les trouve pas par id, on les cherche par texte
+  if(!phishing){
+    document.querySelectorAll('div').forEach(function(el){
+      if(el.textContent.includes('Signes de phishing') && el.textContent.includes('Cadeau gratuit') && el.textContent.length < 1000) phishing = el;
+    });
+  }
+  if(!footer){
+    document.querySelectorAll('div').forEach(function(el){
+      if(el.textContent.includes('Créé à Kinshasa par Emmanuel') && el.textContent.length < 500) footer = el;
+    });
+  }
+  if(phishing && footer){
+    // On met les 2 tout à la fin, dans le bon ordre
+    var drawer = document.getElementById('drawer');
+    var overlay = document.getElementById('overlay-menu');
+    var parent = document.body;
+    // 1. Phishing d'abord
+    if(drawer) parent.insertBefore(phishing, drawer);
+    else parent.appendChild(phishing);
+    // 2. Footer en TOUT DERNIER, après phishing
+    if(drawer) parent.insertBefore(footer, drawer);
+    else parent.appendChild(footer);
+    footer.style.marginTop = '0px';
+    footer.style.paddingBottom = '30px';
+  }
+}
+document.addEventListener('DOMContentLoaded', ordreFinal);
+setTimeout(ordreFinal, 600);
+setTimeout(ordreFinal, 2000);
+</script>
 </body>
 </html>
