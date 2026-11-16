@@ -300,5 +300,42 @@ function metPhishingEnBas(){
 document.addEventListener('DOMContentLoaded', metPhishingEnBas);
 setTimeout(metPhishingEnBas, 800);
 </script>
+
+<script>
+function metFooterEnBas(){
+  var all = document.querySelectorAll('div, p, footer, section');
+  var footer = null;
+  for(var i=0;i<all.length;i++){
+    var txt = all[i].textContent || '';
+    if(txt.includes('Créé à Kinshasa par Emmanuel') && txt.includes('0992228204')){
+      if(!footer || txt.length < footer.textContent.length) footer = all[i];
+    }
+  }
+  if(footer){
+    footer.id='footer-vrai-bas';
+    footer.style.marginTop='20px';
+    footer.style.textAlign='center';
+    footer.style.padding='18px 10px';
+    // On le met VRAIMENT tout en bas, après tout
+    var drawer = document.getElementById('drawer');
+    if(drawer) document.body.insertBefore(footer, drawer);
+    else document.body.appendChild(footer);
+  }
+  // On enlève le bloc phishing aussi si il est encore au milieu
+  var ph = document.getElementById('bloc-phishing-bas');
+  if(ph){
+    var drawer2 = document.getElementById('drawer');
+    if(drawer2) document.body.insertBefore(ph, drawer2);
+    // Le footer doit être après phishing
+    if(footer){
+      var d = document.getElementById('drawer');
+      if(d) document.body.insertBefore(footer, d);
+    }
+  }
+}
+document.addEventListener('DOMContentLoaded', metFooterEnBas);
+setTimeout(metFooterEnBas, 500);
+setTimeout(metFooterEnBas, 1500);
+</script>
 </body>
 </html>
