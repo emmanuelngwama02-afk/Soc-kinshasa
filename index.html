@@ -69,5 +69,34 @@ document.addEventListener('DOMContentLoaded', cacherBoutonInstall);
 setTimeout(cacherBoutonInstall, 1000);
 setTimeout(cacherBoutonInstall, 2000);
 </script>
-<div id="up" style="display:none;position:fixed;top:0;left:0;right:0;background:#FF9800;color:#fff;padding:16px;text-align:center;z-index:99999;font-weight:bold;font-size:16px;box-shadow:0 4px 10px rgba(0,0,0,0.3)">Nouvelle version disponible ! <button onclick="localStorage.v=document.getElementById('up').dataset.v;location.reload(true)" style="background:#fff;color:#FF9800;border:none;padding:8px 18px;border-radius:20px;font-weight:bold;margin-left:8px">METTRE A JOUR</button></div><script>fetch('version.txt?v='+Date.now()).then(r=>r.text()).then(v=>{v=v.trim();var el=document.getElementById('up');el.dataset.v=v;if(localStorage.v&&localStorage.v.trim()!=v){el.style.display='block'}else{localStorage.v=v}})</script></body>
+<div id="up" style="display:none;position:fixed;top:0;left:0;right:0;background:#FF9800;color:#fff;padding:16px;text-align:center;z-index:99999;font-weight:bold;font-size:16px;box-shadow:0 4px 10px rgba(0,0,0,0.3)">Nouvelle version disponible ! <button onclick="localStorage.v=document.getElementById('up').dataset.v;location.reload(true)" style="background:#fff;color:#FF9800;border:none;padding:8px 18px;border-radius:20px;font-weight:bold;margin-left:8px">METTRE A JOUR</button></div><script>fetch('version.txt?v='+Date.now()).then(r=>r.text()).then(v=>{v=v.trim();var el=document.getElementById('up');el.dataset.v=v;if(localStorage.v&&localStorage.v.trim()!=v){el.style.display='block'}else{localStorage.v=v}})</script>
+<div style="background:#fff;margin:15px;padding:15px;border-radius:15px;box-shadow:0 2px 10px rgba(0,0,0,0.1)">
+<h3>🤖 Vérifier un message avec l'IA</h3>
+<p style="font-size:13px;color:#555">Colle le message reçu, même sans internet :</p>
+<textarea id="msgIA" rows="4" style="width:100%;padding:10px;border-radius:10px;border:1px solid #ddd" placeholder="Ex: Félicitations vous avez gagné 500$..."></textarea>
+<button onclick="verifIA()" style="width:100%;margin-top:10px;background:#6C00FF;color:#fff;border:none;padding:12px;border-radius:20px;font-weight:bold">🔍 VÉRIFIER AVEC L'IA</button>
+<div id="resIA" style="margin-top:12px;display:none;padding:12px;border-radius:10px"></div>
+</div>
+<script>
+function verifIA(){
+  var m=document.getElementById('msgIA').value.toLowerCase();
+  var r=document.getElementById('resIA');
+  if(!m){alert('Colle d\'abord un message');return;}
+  var score=0; var raisons=[];
+  var regles=[
+    ['gagné|gagner|félicitations|lot|prime',30,'Parle de gain / lot'],
+    ['clique|cliquez|lien|http|bit.ly|.com|.cd',25,'Contient un lien ou demande de cliquer'],
+    ['urgent|vite|maintenant|bloqué|bloquer|suspendu|24h|aujourd',20,'Te met la pression / urgence'],
+    ['code|mot de passe|pin|otp|secret',30,'Demande un code secret'],
+    ['orange money|airtel money|m-pesa|transfert|envoyer.*argent',20,'Parle d\'argent / Mobile Money'],
+    ['recrutement|embauche|salaire|travail.*domicile',15,'Faux recrutement possible'],
+  ];
+  regles.forEach(function(x){ if(new RegExp(x[0]).test(m)){score+=x[1]; raisons.push('• '+x[2]);} });
+  if(score>70){r.style.background='#ffe0e0';r.innerHTML='<b>🔴 DANGER '+score+'% - NE CLIQUE PAS</b><br>'+raisons.join('<br>');}
+  else if(score>30){r.style.background='#fff3cd';r.innerHTML='<b>🟠 SUSPECT '+score+'% - FAIS ATTENTION</b><br>'+raisons.join('<br>');}
+  else{r.style.background='#d4edda';r.innerHTML='<b>🟢 PROBABLEMENT SÛR '+score+'%</b><br>Aucun signe d\'arnaque détecté, mais reste prudent.';}
+  r.style.display='block';
+}
+</script>
+</body>
 </html>
