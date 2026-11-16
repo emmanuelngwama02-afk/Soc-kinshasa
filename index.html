@@ -179,5 +179,63 @@ toggleLang = function(){ oldToggle(); localStorage.setItem("lang", langFR?"FR":"
 // Si ton bouton analyser existe, on l'accroche
 
 </script>
+
+<!-- MENU MODERNE STYLE FACEBOOK -->
+<style>
+#btn-menu{position:fixed;top:12px;left:12px;z-index:9999;background:#1877F2;color:#fff;border:none;width:44px;height:44px;border-radius:50%;font-size:20px;box-shadow:0 4px 12px rgba(0,0,0,.3)}
+#overlay-menu{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.5);z-index:9998;display:none}
+#drawer{position:fixed;top:0;left:-300px;width:280px;height:100%;background:#fff;z-index:9999;transition:left .3s ease;overflow-y:auto;padding:16px;box-shadow:4px 0 20px rgba(0,0,0,.3)}
+#drawer.open{left:0}
+.drawer-head{display:flex;align-items:center;gap:10px;padding-bottom:14px;border-bottom:1px solid #eee}
+.drawer-avatar{width:48px;height:48px;border-radius:50%;background:#1877F2;color:#fff;display:flex;align-items:center;justify-content:center;font-size:22px;font-weight:bold}
+.drawer-item{display:flex;align-items:center;gap:12px;padding:13px 10px;border-radius:10px;font-size:15px;font-weight:600;color:#111;cursor:pointer;border:none;background:none;width:100%;text-align:left}
+.drawer-item:active{background:#f0f2f5}
+.drawer-label{font-size:11px;color:#888;font-weight:800;margin:14px 0 4px 10px;letter-spacing:1px}
+.switch{margin-left:auto;width:46px;height:26px;background:#ccc;border-radius:20px;position:relative;transition:.3s}
+.switch.on{background:#1877F2}
+.switch:after{content:"";position:absolute;top:3px;left:3px;width:20px;height:20px;background:#fff;border-radius:50%;transition:.3s}
+.switch.on:after{left:23px}
+body.dark{background:#18191a!important;color:#fff!important}
+body.dark #drawer{background:#242526!important;color:#fff!important}
+body.dark .drawer-item{color:#fff!important}
+body.dark .drawer-item:active{background:#3a3b3c!important}
+</style>
+<button id="btn-menu" onclick="openMenu()">☰</button>
+<div id="overlay-menu" onclick="closeMenu()"></div>
+<div id="drawer">
+  <div class="drawer-head">
+    <div class="drawer-avatar">E</div>
+    <div><div style="font-weight:800;font-size:16px">Emmanuel Ngwama</div><div style="color:#888;font-size:12px">SOC KINSHASA • Fondateur</div></div>
+    <span onclick="closeMenu()" style="margin-left:auto;font-size:22px;cursor:pointer">✕</span>
+  </div>
+  <div class="drawer-label">MENU</div>
+  <button class="drawer-item" onclick="closeMenu();window.scrollTo({top:0,behavior:'smooth'})">🏠 Accueil</button>
+  <button class="drawer-item" onclick="closeMenu();document.querySelector('input').focus()">🔍 Analyser un lien</button>
+  <button class="drawer-item" onclick="closeMenu();alert('Merci ! Envoie le faux message sur WhatsApp')">🚨 Signaler une arnaque</button>
+  <button class="drawer-item" onclick="closeMenu();if(navigator.share){navigator.share({title:'SOC KINSHASA',text:'Protège Kinshasa contre les arnaques',url:location.href})}else{alert('Copie le lien : '+location.href)}">↗️ Partager l'appli</button>
+  <div class="drawer-label">PARAMÈTRES</div>
+  <button class="drawer-item" onclick="toggleDarkMenu()">🌙 Mode sombre <div id="sw-dark" class="switch"></div></button>
+  <button class="drawer-item" onclick="toggleLangMenu()">🌍 Langue <span id="txt-lang" style="margin-left:auto;color:#1877F2">Français</span></button>
+  <button class="drawer-item" onclick="closeMenu();alert('SOC KINSHASA v2.0\n100% Défensif\nProtège Kinshasa contre les faux liens')">ℹ️ À propos</button>
+  <button class="drawer-item" onclick="closeMenu();localStorage.clear();location.reload()">🔄 Réinitialiser l'appli</button>
+  <div style="text-align:center;color:#888;font-size:11px;margin-top:20px">SOC KINSHASA • 100% DEFENSIF<br>Kinshasa ne tombe pas.</div>
+</div>
+<script>
+function openMenu(){document.getElementById('drawer').classList.add('open');document.getElementById('overlay-menu').style.display='block'}
+function closeMenu(){document.getElementById('drawer').classList.remove('open');document.getElementById('overlay-menu').style.display='none'}
+function toggleDarkMenu(){
+  var isDark=document.body.classList.toggle('dark');
+  document.getElementById('sw-dark').classList.toggle('on',isDark);
+  localStorage.setItem('dark',isDark?'1':'0');
+}
+if(localStorage.getItem('dark')=='1'){document.body.classList.add('dark');setTimeout(function(){var s=document.getElementById('sw-dark');if(s)s.classList.add('on')},300)}
+var langMenu='FR';
+function toggleLangMenu(){
+  langMenu=(langMenu=='FR')?'LN':'FR';
+  document.getElementById('txt-lang').textContent=(langMenu=='FR')?'Français':'Lingala';
+  // On change juste les gros titres du menu, sans toucher au reste pour ne pas faire bugger
+  alert(langMenu=='LN' ? 'Mode Lingala activé pour le menu !\nOn fera la version Lingala complète après.' : 'Mode Français activé !');
+}
+</script>
 </body>
 </html>
