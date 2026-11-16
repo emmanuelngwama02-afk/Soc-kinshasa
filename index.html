@@ -117,3 +117,28 @@ if(!n){alert('Mets le numéro ou lien');return;}
 window.open('https://wa.me/243992228204?text='+encodeURIComponent('🚨 SIGNALEMENT NGWAMA SHIELD\nNuméro/Lien: '+n+'\nMessage: '+m),'_blank');
 }
 </script></body></html>
+<div style="background:#1a0000;border:2px solid #ff3d00;border-radius:16px;padding:18px;margin:14px">
+<h2 style="text-align:center;color:#ff5252">😱 MON COMPTE A ETE PIRATE ?</h2>
+<p style="text-align:center;color:#fff">Choisis ton compte :</p>
+<select id="type-pirate" style="width:100%;padding:13px;border-radius:10px;background:#000;color:#fff">
+<option value="facebook">Facebook</option>
+<option value="whatsapp">WhatsApp</option>
+<option value="gmail">Gmail</option>
+<option value="tiktok">TikTok</option>
+<option value="instagram">Instagram</option>
+</select>
+<button onclick="aidePirate()" style="width:100%;background:#ff3d00;color:white;padding:14px;border:none;border-radius:10px;font-weight:bold;margin-top:10px">VOIR COMMENT RECUPERER</button>
+<div id="res-pirate" style="margin-top:14px;background:#000;color:#fff;padding:14px;border-radius:10px;display:none"></div>
+</div>
+<script>
+function aidePirate(){
+var v=document.getElementById('type-pirate').value;
+var r=document.getElementById('res-pirate');
+r.style.display='block';
+if(v=='facebook') r.innerHTML='FACEBOOK: Va sur facebook.com/hacked, mets ton numero, change mot de passe, clique sur le mail "Ce n etait pas moi"';
+if(v=='whatsapp') r.innerHTML='WHATSAPP: Desinstalle et reinstalle WhatsApp, remets ton numero, mets le code SMS. Le pirate sera deconnecte. Ne donne JAMAIS ton code a 6 chiffres.';
+if(v=='gmail') r.innerHTML='GMAIL: Va sur accounts.google.com/signin/recovery, change mot de passe, deconnecte les appareils inconnus.';
+if(v=='tiktok') r.innerHTML='TIKTOK: Profil > Parametres > Signaler un probleme > Compte pirate, change mot de passe.';
+if(v=='instagram') r.innerHTML='INSTAGRAM: Mot de passe oublie > Vous ne pouvez pas reinitialiser ? > Instagram te demandera une video de ton visage.';
+}
+</script>
