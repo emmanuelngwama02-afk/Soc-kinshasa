@@ -81,6 +81,42 @@ function fermerMenu(){document.getElementById('menuFB').style.display='none';doc
 <div class="mini">🔗<b>Analyse Lien</b>Avant de cliquer</div>
 <div class="mini">📞<b>Vérifie Numéro</b>Arnaque ou pas ?</div>
 
+
+<div id="case3" style="background:#111;border:1px solid #333;border-radius:16px;padding:14px;margin:10px">
+<h3 style="color:#fff;margin:0">🖼️ 3. Vérifie Image</h3>
+<p style="color:#aaa;font-size:13px">Envoie directement la capture, la photo ou l'image suspecte ici.</p>
+
+<label for="img3" style="display:block;background:#222;color:#fff;text-align:center;padding:14px;border-radius:12px;border:2px dashed #00e676;cursor:pointer;font-weight:bold">📤 CLIQUE ICI POUR ENVOYER UNE IMAGE</label>
+<input id="img3" type="file" accept="image/*" capture="environment" style="display:none">
+
+<img id="preview3" style="display:none;width:100%;border-radius:12px;margin-top:10px;border:1px solid #333">
+<p id="info3" style="color:#ccc;font-size:13px"></p>
+
+<button onclick="verifierImage3()" style="width:100%;background:#00e676;color:#000;font-weight:bold;padding:13px;border:none;border-radius:12px;margin-top:8px;font-size:15px">🔍 VÉRIFIER CETTE IMAGE</button>
+
+<div id="resultat3" style="margin-top:10px"></div>
+
+<a id="wa3" href="https://wa.me/243992228204" style="display:none;background:#25D366;color:#000;font-weight:bold;text-align:center;padding:12px;border-radius:12px;text-decoration:none;margin-top:8px">📱 Envoyer à Emmanuel sur WhatsApp pour vérification</a>
+</div>
+<script>
+let fichierImage3=null;
+document.getElementById('img3').addEventListener('change', function(e){
+  let f=e.target.files[0];
+  if(!f) return;
+  fichierImage3=f;
+  let url=URL.createObjectURL(f);
+  let img=document.getElementById('preview3');
+  img.src=url; img.style.display='block';
+  document.getElementById('info3').innerHTML='✅ Image reçue : '+f.name+' • '+(f.size/1024).toFixed(0)+' Ko • Type : '+f.type;
+  document.getElementById('resultat3').innerHTML='';
+});
+function verifierImage3(){
+  if(!fichierImage3){ alert('Envoie d abord une image en cliquant sur le cadre !'); return; }
+  document.getElementById('resultat3').innerHTML='<div style="background:#1a1a1a;padding:12px;border-radius:12px;color:#fff;font-size:14px;line-height:1.5">⏳ Analyse en cours...<br>• On vérifie si l image est floue / recadrée<br>• Si c est une capture WhatsApp / TikTok<br>• Si le nom ou le logo est suspect<br><br><b style="color:#ffd600">⚠️ Attention :</b> Si on te demande de l argent avec cette image, ne paie pas. Envoie-la à Emmanuel.</div>';
+  document.getElementById('wa3').style.display='block';
+  document.getElementById('wa3').href='https://wa.me/243992228204?text='+encodeURIComponent('Bonjour Emmanuel, je veux vérifier cette image : '+fichierImage3.name+' - C est suspect, aide-moi.');
+}
+</script>
 <div style="text-align:center;margin:10px">
 <label for="photo-direct" style="display:inline-block;background:#ff9800;color:#000;font-weight:bold;padding:12px 20px;border-radius:12px;cursor:pointer">📷 PRENDRE UNE PHOTO DIRECTEMENT</label>
 <input id="photo-direct" type="file" accept="image/*" capture="environment" style="display:none" onchange="if(this.files[0]){alert('Photo prise ! Maintenant choisis-la aussi dans Vérifie Image en bas pour l analyser.');}">
