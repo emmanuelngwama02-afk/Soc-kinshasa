@@ -1,281 +1,86 @@
 <!DOCTYPE html>
-<html lang="fr"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>NGWAMA SHIELD - Emmanuel Ngwama</title><link rel="manifest" href="manifest.json"><meta name="theme-color" content="#00C853"><link rel="apple-touch-icon" href="icon-192.png"><style>*{margin:0;padding:0;box-sizing:border-box}body{font-family:Arial,sans-serif;background:#070B09;color:#fff;min-height:100vh;display:flex;flex-direction:column}.top{background:linear-gradient(135deg,#00E676,#00C853,#00B0FF);padding:26px 16px;text-align:center;border-radius:0 0 26px 26px;color:#02120A}.top h1{font-size:30px;font-weight:900}.top p{font-size:12px;font-weight:700;letter-spacing:1.5px;margin-top:4px}.top .o{background:#fff;color:#111;display:inline-block;padding:8px 14px;border-radius:999px;font-size:13px;font-weight:800;margin-top:12px}.contact{background:#101713;margin:16px;border-radius:18px;padding:16px;text-align:center;border:1px solid #222}.contact b{font-size:17px}.contact a{display:block;background:#25D366;color:#000;font-weight:900;padding:13px;border-radius:14px;text-decoration:none;margin-top:10px}.stats{display:flex;gap:12px;margin:0 16px}.stat{flex:1;background:#161F1B;border:1px solid #222;border-radius:16px;padding:14px;text-align:center}.stat b{font-size:20px}.stat span{font-size:12px;color:#8FA094}.card{background:#fff;color:#111;border-radius:24px;padding:20px;margin:16px}.card h2{font-size:24px;line-height:1.2}.card h2 em{font-style:normal;color:#00A651}.card p{color:#5B6B62;font-size:14px;margin-top:6px}.card input{width:100%;padding:14px;border-radius:12px;border:1px solid #ddd;background:#F2F5F3;margin-top:14px;font-size:15px;outline:none}.card button{width:100%;padding:15px;background:#111;color:#fff;border:none;border-radius:12px;font-size:16px;font-weight:900;margin-top:10px}#bar{height:32px;background:#eee;border-radius:999px;overflow:hidden;margin-top:14px;display:none}#fill{height:100%;width:0%;background:#00C853;color:#fff;font-weight:800;line-height:32px;font-size:13px;text-align:center}#res{background:#0F1512;color:#fff;padding:14px;border-radius:14px;margin-top:12px;display:none;font-size:14px;line-height:1.6}.box{background:#141B17;border:1px solid #222;border-radius:18px;padding:14px;margin:0 16px}.box h3{font-size:16px}.box p{font-size:13px;color:#8FA094;line-height:1.8;margin-top:6px}footer{text-align:center;color:#6B7A70;font-size:12px;padding:16px;line-height:1.6}footer b{color:#fff}</style><style id="v3-style-old">body.dark{background:#111!important;color:#fff!important} .bottom-nav{position:fixed;bottom:0;left:0;right:0;background:#fff;display:flex;justify-content:space-around;padding:10px 0 14px;border-top:1px solid #ddd;z-index:99999} .bottom-nav button{background:none;border:none;font-size:22px} .bottom-nav span{display:block;font-size:11px;font-weight:bold} body{padding-bottom:75px!important} .top-bar-v3{display:flex;justify-content:space-between;padding:10px} .top-bar-v3 button{border:none;padding:8px 12px;border-radius:20px;font-weight:bold}</style></head><body><div id="badge-secu" style="display:none;text-align:center;background:#e6ffe6;border:2px solid #25D366;padding:12px;border-radius:15px;margin:10px">✅ <b>APPAREIL PROTEGE</b><br><span style="font-size:12px">Verifie par NGWAMA SHIELD</span></div><div class="top"><h1><img src="logo.jpg?v=12" style="width:45px;height:45px;border-radius:10px;vertical-align:middle;object-fit:cover;"> NGWAMA SHIELD</h1><p>SOC KINSHASA • MINI SOC DEFENSEUR • 100% DEFENSIF</p><div class="o">E • Emmanuel Ngwama • Fondateur</div></div><div class="contact"><small>BESOIN D'AIDE ?</small><br><b>Emmanuel Ngwama</b><p>Si vous voulez me contacter, WhatsApp ici 👇</p><a href="https://wa.me/243992228204?text=Bonjour%20Emmanuel,%20je%20viens%20de%20SOC%20Kinshasa">💬 WhatsApp • 0992228204</a></div><div class="stats"><div class="stat"><b id="count">0</b><br><span>Analyses</span></div><div class="stat"><b>Kinshasa 🇨🇩</b><br><span>En ligne</span></div></div><div class="card"><b style="background:#E6FFF0;color:#00A651;padding:6px 10px;border-radius:999px;font-size:11px">✦ ANALYSE INTELLIGENTE</b><h2>Colle un lien<br>avant de <em>cliquer.</em></h2><p>On vérifie si le lien est vrai ou faux en 1 seconde.</p><input id="lien" placeholder="Ex : https://google.com"><button onclick="verifier()">🔍 ANALYSER MAINTENANT</button><div id="bar"><div id="fill">0%</div></div><div id="res"></div></div><div style='font-size:9px;font-weight:bold;pointer-events:none'>PARTAGE</div></div><script>let b=document.getElementById('bulle');let dx=0,dy=0,drag=false,sx=0,sy=0,moved=false;b.addEventListener('pointerdown',e=>{drag=true;moved=false;sx=e.clientX;sy=e.clientY;let r=b.getBoundingClientRect();dx=e.clientX-r.left;dy=e.clientY-r.top;b.setPointerCapture(e.pointerId);});b.addEventListener('pointermove',e=>{if(!drag)return;let x=e.clientX-dx,y=e.clientY-dy;if(Math.abs(e.clientX-sx)>5||Math.abs(e.clientY-sy)>5)moved=true;b.style.left=x+'px';b.style.top=y+'px';b.style.right='auto';b.style.bottom='auto';});b.addEventListener('pointerup',e=>{drag=false;if(!moved){if(navigator.share){navigator.share({title:'NGWAMA SHIELD',text:'Telecharge mon appli',url:location.href})}else{window.open('https://wa.me/?text='+encodeURIComponent('Telecharge NGWAMA SHIELD : '+location.href))}}});</script><button id="btn-install" style="position:fixed;bottom:90px;left:16px;background:#000;color:#fff;padding:16px 22px;border-radius:30px;border:2px solid #fff;font-weight:bold;font-size:16px;z-index:99998;box-shadow:0 6px 18px rgba(0,0,0,0.5);display:block">📲 Installer l'appli</button><div id="ios-help" style="display:none;position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,0.8);z-index:100000;align-items:center;justify-content:center"><div style="background:#fff;margin:20px;padding:20px;border-radius:15px;text-align:center"><h3>Sur iPhone :</h3><p>1. Appuie sur <b>Partager ⬆️</b> en bas de Safari<br>2. Descends et appuie sur <b>Ajouter à l'écran d'accueil</b><br>3. Appuie sur <b>Ajouter</b></p><button onclick="document.getElementById('ios-help').style.display='none'" style="background:#1E90FF;color:#fff;border:none;padding:10px 20px;border-radius:20px;font-weight:bold">OK, j'ai compris</button></div></div><script>let deferredPrompt=null;let btn=document.getElementById('btn-install');let isIOS=/iPhone|iPad|iPod/.test(navigator.userAgent);let isInApp=window.matchMedia('(display-mode: standalone)').matches||window.navigator.standalone;if(!isInApp){if(isIOS){btn.style.display='block';btn.onclick=()=>{document.getElementById('ios-help').style.display='flex';}}else{window.addEventListener('beforeinstallprompt',e=>{e.preventDefault();deferredPrompt=e;btn.style.display='block';});btn.onclick=async()=>{if(deferredPrompt){deferredPrompt.prompt();let r=await deferredPrompt.userChoice;deferredPrompt=null;btn.style.display='none';}else{alert('Pour installer : Menu Chrome (3 points) > Installer l\'application');}}}} </script>
-<script>
-function partagerNgwama(){
-  var msg = "🔥 Tu as reçu un message bizarre ? Ne clique pas ! Vérifie ici c'est GRATUIT 👇 https://emmanuelngwama02-afk.github.io/Soc-kinshasa/";
-  window.open("https://wa.me/?text=" + encodeURIComponent(msg), "_blank");
-}
-// On répare l'ancien bouton bleu sans l'effacer : quand on clique dessus, ça ouvre WhatsApp
-document.addEventListener('click', function(e){
-  var el = e.target.closest('button, a, div');
-  if(el && el.textContent && el.textContent.includes('PARTAGE')){
-    e.preventDefault();
-    e.stopPropagation();
-    partagerNgwama();
-  }
-});
-</script>
-
-<!-- NOUVEAU BOUTON PARTAGE QUI MARCHE -->
-<a href="https://wa.me/?text=%F0%9F%94%A5%20Tu%20as%20re%C3%A7u%20un%20message%20bizarre%20%3F%20Ne%20clique%20pas%20!%20V%C3%A9rifie%20ici%20c%27est%20GRATUIT%20%F0%9F%91%87%20https%3A%2F%2Femmanuelngwama02-afk.github.io%2FSoc-kinshasa%2F" target="_blank" style="position:fixed;bottom:18px;right:18px;background:#25D366;color:white;width:78px;height:78px;border-radius:50%;display:flex;flex-direction:column;align-items:center;justify-content:center;font-weight:bold;font-size:11px;text-decoration:none;z-index:999999;box-shadow:0 4px 15px rgba(0,0,0,0.5);border:2px solid white;">📤<span>PARTAGE</span></a>
-
+<html lang="fr"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>SOC KINSHASA - Max Services</title>
 <style>
-/* Quand l'appli est installée, on cache le bouton installer */
-@media (display-mode: standalone) {
-  .btn-install-cache { display: none !important; }
-}
-</style>
-<script>
-// Si on est dans l'appli installée, on cache le bouton Installer
-function cacherBoutonInstall(){
-  var estInstalle = window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone === true;
-  if(estInstalle){
-    var tous = document.querySelectorAll('button, a, div, span');
-    tous.forEach(function(el){
-      if(el.textContent && el.textContent.includes("Installer l'appli")){
-        // On cache le plus petit bouton qui contient ce texte, pas toute la page
-        if(el.textContent.trim().length < 60){
-          el.style.display = 'none';
-          el.classList.add('btn-install-cache');
-        }
-      }
-    });
-  }
-}
-document.addEventListener('DOMContentLoaded', cacherBoutonInstall);
-setTimeout(cacherBoutonInstall, 1000);
-setTimeout(cacherBoutonInstall, 2000);
-</script>
-<div id="up" style="display:none;position:fixed;top:0;left:0;right:0;background:#FF9800;color:#fff;padding:16px;text-align:center;z-index:99999;font-weight:bold;font-size:16px;box-shadow:0 4px 10px rgba(0,0,0,0.3)">Nouvelle version disponible ! <button onclick="localStorage.v=document.getElementById('up').dataset.v;location.reload(true)" style="background:#fff;color:#FF9800;border:none;padding:8px 18px;border-radius:20px;font-weight:bold;margin-left:8px">METTRE A JOUR</button></div><script>fetch('version.txt?v='+Date.now()).then(r=>r.text()).then(v=>{v=v.trim();var el=document.getElementById('up');el.dataset.v=v;if(localStorage.v&&localStorage.v.trim()!=v){el.style.display='block'}else{localStorage.v=v}})</script>
-<div style="background:#fff;margin:15px;padding:15px;border-radius:15px;box-shadow:0 2px 10px rgba(0,0,0,0.1)">
-<h3>🤖 Vérifier un message avec l'IA</h3>
-<p style="font-size:13px;color:#555">Colle le message reçu, même sans internet :</p>
-<textarea id="msgIA" rows="4" style="width:100%;padding:10px;border-radius:10px;border:1px solid #ddd" placeholder="Ex: Félicitations vous avez gagné 500$..."></textarea>
-<button onclick="verifIA()" style="width:100%;margin-top:10px;background:#6C00FF;color:#fff;border:none;padding:12px;border-radius:20px;font-weight:bold">🔍 VÉRIFIER AVEC L'IA</button>
-<div id="resIA" style="margin-top:12px;display:none;padding:12px;border-radius:10px"></div>
+*{margin:0;padding:0;box-sizing:border-box}body{font-family:Arial,sans-serif;background:#0a0a0a;color:white;padding-bottom:30px}
+header{background:linear-gradient(135deg,#00e676,#00c853);color:#000;padding:20px 15px;text-align:center}
+header h1{font-size:26px}header p{font-size:14px;margin-top:5px}
+.contact{background:#000;text-align:center;padding:12px;font-size:14px;line-height:1.6;border-bottom:1px solid #222}
+.contact a{display:inline-block;margin-top:8px;background:#25D366;color:#000;font-weight:bold;padding:10px 18px;border-radius:20px;text-decoration:none}
+.alerte{background:#ff3d00;color:#fff;margin:14px 16px;padding:14px;border-radius:14px;text-align:center;font-size:14px;line-height:1.5}
+.card{background:#12211a;border:1px solid #00e676;border-radius:18px;padding:18px 16px;margin:14px 16px;text-align:center}
+.card h2{font-size:19px;margin-bottom:8px}.card p{color:#aaa;font-size:13px;margin-bottom:12px}
+input,textarea,select{width:100%;padding:13px;border-radius:10px;border:none;background:#000;color:#fff;font-size:14px;outline:none;margin-top:8px}
+button{width:100%;margin-top:12px;padding:13px;background:#00e676;color:#000;border:none;border-radius:10px;font-size:16px;font-weight:bold}
+.btn2{background:#fff;color:#000}.btn-rouge{background:#d50000;color:#fff}.btn-orange{background:#ff9800;color:#000}
+.result{background:#000;padding:12px;border-radius:10px;margin-top:12px;text-align:left;display:none;font-size:14px;line-height:1.6}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:14px 16px}
+.mini{background:#1a1a1a;border-radius:14px;padding:14px;text-align:center;font-size:13px;line-height:1.5}
+.mini b{display:block;font-size:16px;margin-bottom:4px}
+footer{text-align:center;color:#666;font-size:13px;padding:12px;line-height:1.6}
+</style></head><body>
+<header><h1>🛡️ SOC KINSHASA</h1><p>Max Services - 100% Défensif</p><p><b>Par Emmanuel Ngwama</b></p></header>
+<div class="contact">WhatsApp : 0992228204<br><a href="https://wa.me/243992228204?text=Bonjour%20Emmanuel,%20je%20viens%20de%20SOC%20Kinshasa">📱 Contacter sur WhatsApp</a></div>
+
+<div class="alerte">⚠️ <b>ALERTE DU JOUR À KINSHASA</b><br>Faux message "Orange Money" qui circule : "Vous avez gagné 50$". Ne donnez JAMAIS votre code. C'est une arnaque !</div>
+
+<div class="grid">
+<div class="mini">🔗<b>Analyse Lien</b>Avant de cliquer</div>
+<div class="mini">📞<b>Vérifie Numéro</b>Arnaque ou pas ?</div>
+<div class="mini">🖼️<b>Vérifie Image</b>Fausses captures</div>
+<div class="mini">🆘<b>SOS</b>J'ai déjà cliqué</div>
 </div>
+
+<div class="card"><h2>🔗 1. Analyse un lien suspect</h2><p>Colle un lien avant de cliquer.</p>
+<input id="lien" placeholder="Ex: https://google.com"><button onclick="verifierLien()">🔍 ANALYSER LE LIEN</button><div id="res-lien" class="result"></div></div>
+
+<div class="card"><h2>📞 2. Vérifier un numéro suspect</h2><p>Tu as reçu un message bizarre ? Colle le numéro ici.</p>
+<input id="num" placeholder="Ex: 0992228204 ou +243..."><button onclick="verifierNum()" class="btn2">📞 VÉRIFIER LE NUMÉRO</button><div id="res-num" class="result"></div></div>
+
+<div class="card"><h2>🖼️ 3. Vérifier une image / capture</h2><p>On t'a envoyé une image "Gouvernement donne l'argent" ?</p>
+<select id="img-type"><option>Image dit : Tu as gagné de l'argent</option><option>Image dit : Gouvernement / ONG donne de l'argent</option><option>Image : Faux reçu Orange Money</option><option>Image : Faux compte d'une star / pasteur</option></select>
+<button onclick="verifierImg()" class="btn-orange">🖼️ VÉRIFIER L'IMAGE</button><div id="res-img" class="result"></div></div>
+
+<div class="card"><h2>🚨 4. Signaler une arnaque</h2><p>Aide Kinshasa. Ton signalement va direct sur mon WhatsApp.</p>
+<input id="sig-num" placeholder="Numéro ou lien de l'arnaqueur"><textarea id="sig-msg" rows="3" placeholder="Qu'est-ce qu'il t'a dit ?"></textarea>
+<button onclick="signaler()" class="btn-rouge">🚨 SIGNALER SUR WHATSAPP</button></div>
+
+<div class="card" style="border-color:#ff3d00"><h2>🆘 5. SOS - J'ai déjà cliqué !</h2><p>Ne panique pas. Fais ça MAINTENANT :</p>
+<div class="result" style="display:block">1. <b>Ne donne plus rien.</b> Ne mets pas ton code / mot de passe.<br>2. <b>Change ton mot de passe</b> Facebook / WhatsApp / Gmail.<br>3. <b>Bloque le numéro</b> sur WhatsApp.<br>4. <b>Si tu as donné ton code Orange Money</b>, appelle vite le 177 ou va chez un agent.<br>5. <b>Préviens tes contacts</b> : "Mon compte est piraté, ne cliquez pas."</div>
+<button onclick="window.open('https://wa.me/243992228204?text=URGENT%20SOS%20Jai%20clique%20sur%20un%20faux%20lien,%20aide-moi','_blank')" class="btn-rouge">🆘 AIDE-MOI SUR WHATSAPP</button></div>
+
+<div class="card"><h2>📚 6. Apprendre en 1 minute</h2><p><b>Règle d'or :</b><br>• Orange Money ne te demandera JAMAIS ton code par SMS.<br>• Personne ne donne 50$ gratuit sur WhatsApp.<br>• Un vrai site a https + nom sans faute.<br>• Si c'est urgent + cadeau = 99% arnaque.</p></div>
+
+<div class="card"><h2>💼 7. Nos Services Payants</h2><p>Logo 20$ • Site Vitrine 50$ • Sécurisation 15$ • VIP 5.000 Fc/mois</p>
+<button onclick="window.open('https://wa.me/243992228204?text=Bonjour%20Emmanuel,%20je%20veux%20commander%20un%20service%20SOC','_blank')">💼 COMMANDER SUR WHATSAPP</button>
+<button onclick="window.open('https://wa.me/243992228204?text=Bonjour,%20je%20veux%20devenir%20VIP%20SOC%205000Fc','_blank')" class="btn2">⭐ DEVENIR VIP - 5.000 Fc</button></div>
+
+<div class="card"><h2>🚨 Signes de phishing</h2><p>• Cadeau gratuit / gagner<br>• On te demande mot de passe urgent<br>• Lien bizarre bit.ly<br>• Faute dans le nom du site</p></div>
+
+<footer>Créé à Kinshasa par Emmanuel Ngwama 🇨🇩<br>WhatsApp : 0992228204</footer>
 <script>
-function verifIA(){
-  var m=document.getElementById('msgIA').value.toLowerCase();
-  var r=document.getElementById('resIA');
-  if(!m){alert('Colle d\'abord un message');return;}
-  var score=0; var raisons=[];
-  var regles=[
-    ['gagné|gagner|félicitations|lot|prime',30,'Parle de gain / lot'],
-    ['clique|cliquez|lien|http|bit.ly|.com|.cd',25,'Contient un lien ou demande de cliquer'],
-    ['urgent|vite|maintenant|bloqué|bloquer|suspendu|24h|aujourd',20,'Te met la pression / urgence'],
-    ['code|mot de passe|pin|otp|secret',30,'Demande un code secret'],
-    ['orange money|airtel money|m-pesa|transfert|envoyer.*argent',20,'Parle d\'argent / Mobile Money'],
-    ['recrutement|embauche|salaire|travail.*domicile',15,'Faux recrutement possible'],
-  ];
-  regles.forEach(function(x){ if(new RegExp(x[0]).test(m)){score+=x[1]; raisons.push('• '+x[2]);} });
-  if(score>70){r.style.background='#ffe0e0';r.innerHTML='<b>🔴 DANGER '+score+'% - NE CLIQUE PAS</b><br>'+raisons.join('<br>');}
-  else if(score>30){r.style.background='#fff3cd';r.innerHTML='<b>🟠 SUSPECT '+score+'% - FAIS ATTENTION</b><br>'+raisons.join('<br>');}
-  else{r.style.background='#d4edda';r.innerHTML='<b>🟢 PROBABLEMENT SÛR '+score+'%</b><br>Aucun signe d\'arnaque détecté, mais reste prudent.';}
-  r.style.display='block';
+function show(id,html){let e=document.getElementById(id);e.style.display='block';e.innerHTML=html;}
+function verifierLien(){
+let u=document.getElementById('lien').value.toLowerCase().trim();
+if(!u){alert('Colle un lien d’abord');return;}
+let connus=['google.com','facebook.com','whatsapp.com','youtube.com','instagram.com','tiktok.com','wikipedia.org'];
+for(let d of connus){if(u.includes(d)){show('res-lien','<b>✅ 100% VRAI</b><br>Domaine officiel connu. Tu peux continuer.');return;}}
+if(u.includes('bit.ly')||u.includes('tinyurl')||u.includes('t.me')||u.includes('free')||u.includes('gratuit')||u.includes('gagner')||u.includes('cadeau')||u.includes('login')||u.includes('verify')||!u.startsWith('https://')){show('res-lien','<b>❌ 15% FAUX - DANGER</b><br>Ne clique surtout pas, c’est un faux lien !');}
+else{show('res-lien','<b>✅ 85% VRAI</b><br>Aucun signal suspect. Reste prudent.');}
 }
-</script>
-
-<script>
-function envoieVersIA(){
-  // On cherche le champ du haut (lien)
-  var inputs = document.querySelectorAll('input');
-  var champHaut = inputs[0];
-  if(!champHaut) return;
-  var val = champHaut.value.trim();
-  if(!val) return;
-  // Si ce n'est PAS un lien (pas de . ni http), c'est un message -> on l'envoie à l'IA
-  var cestUnLien = val.includes('http') || val.includes('.') && val.includes('/') || val.includes('.com') || val.includes('.cd');
-  if(!cestUnLien){
-    var champIA = document.getElementById('msgIA');
-    if(champIA){
-      champIA.value = val;
-      champIA.scrollIntoView({behavior:'smooth', block:'center'});
-      // On lance l'IA tout seul
-      setTimeout(function(){ verifIA(); }, 500);
-    }
-    return true;
-  }
-  return false;
+function verifierNum(){
+let n=document.getElementById('num').value.trim();
+if(!n){alert('Mets un numéro');return;}
+if(n.includes('099')||n.includes('089')||n.includes('081')||n.includes('097')||n.includes('090')){show('res-num','<b>⚠️ NUMÉRO À VÉRIFIER</b><br>Numéro congolais normal, mais méfie-toi si il te demande un code ou de l’argent. Ne donne JAMAIS ton code. Si il dit "tu as gagné", c’est 99% FAUX.');}
+else{show('res-num','<b>⚠️ NUMÉRO ÉTRANGER / BIZARRE</b><br>Si ce numéro te promet de l’argent, bloque-le. C’est souvent une arnaque.');}
 }
-// On intercepte le bouton ANALYSER en haut
-document.addEventListener('click', function(e){
-  if(e.target && e.target.textContent && e.target.textContent.includes('ANALYSER')){
-    var v = document.querySelectorAll('input')[0].value.trim();
-    if(v && !v.includes('http') && !v.includes('.com') && !v.includes('.cd') && !v.includes('www')){
-      e.preventDefault(); e.stopPropagation();
-      envoieVersIA();
-      alert('Ce n\'est pas un lien, je l\'ai envoyé à l\'IA en bas 🤖');
-    }
-  }
-}, true);
-</script>
-<script>function toggleDark(){document.body.classList.toggle("dark");document.getElementById("btn-dark").textContent=document.body.classList.contains("dark")?"☀️ Clair":"🌙 Sombre";localStorage.setItem("dark",document.body.classList.contains("dark"))} if(localStorage.getItem("dark")=="true"){document.body.classList.add("dark")} </script>
-
-<script>
-
-
-</script>
-
-
-<div id="section-signaler" style="margin:15px;padding:15px;border:1px solid #ddd;border-radius:15px;background:#fff">
-<h3 id="t-signaler">🚨 Signaler une arnaque</h3>
-<p id="p-signaler" style="font-size:13px">Tu as recu un faux message ? Aide les autres.</p>
-<textarea id="signal-text" placeholder="Colle le message suspect ici..." style="width:100%;height:80px;padding:10px;border-radius:10px"></textarea>
-<input id="signal-num" placeholder="Numero arnaqueur ex: 081..." style="width:100%;padding:10px;margin-top:8px;border-radius:10px" />
-<button onclick="signalerArnaque()" style="background:#FF3B30;color:#fff;border:none;width:100%;padding:13px;border-radius:25px;font-weight:bold;margin-top:10px">🚨 SIGNALER MAINTENANT</button>
-<div id="signal-list" style="margin-top:12px;font-size:13px"></div>
-</div>
-<div class="bottom-nav" style="position:fixed;bottom:0;left:0;right:0;background:#fff;display:flex;justify-content:space-around;padding:10px 0 14px;border-top:1px solid #ddd;z-index:99999">
-<button onclick="window.scrollTo({top:0,behavior:'smooth'})" style="background:none;border:none;font-size:22px">🏠<span id="nav-acc" style="display:block;font-size:11px;font-weight:bold">Accueil</span></button>
-<button onclick="goIA()" style="background:none;border:none;font-size:22px">🤖<span id="nav-ver" style="display:block;font-size:11px;font-weight:bold">Vérifier</span></button>
-<button onclick="goSignaler()" style="background:none;border:none;font-size:22px">🚨<span id="nav-sig" style="display:block;font-size:11px;font-weight:bold">Signaler</span></button>
-<button onclick="partagerApp()" style="background:none;border:none;font-size:22px">📤<span style="display:block;font-size:11px;font-weight:bold">Partager</span></button>
-</div>
-<style>body.dark{background:#111!important} body.dark div{background:#1a1a1a!important;color:#fff!important} body.dark input,body.dark textarea{background:#222!important;color:#fff!important} body{padding-bottom:75px!important}</style>
-<script>
-function toggleDark(){document.body.classList.toggle("dark"); document.getElementById("btn-dark").textContent=document.body.classList.contains("dark")?"☀️ Clair":"🌙 Sombre"; localStorage.setItem("dark",document.body.classList.contains("dark"))}
-if(localStorage.getItem("dark")=="true"){document.body.classList.add("dark")}
-
-
-</script>
-
-<script>
-
-function alertLingala(msgFR, msgLN){
-  alert(langFR ? msgFR : msgLN);
+function verifierImg(){
+let v=document.getElementById('img-type').value;
+show('res-img','<b>❌ 90% FAUX - ARNAQUE</b><br>"'+v+'" = Technique classique à Kinshasa. Aucun gouvernement ne donne l’argent par capture WhatsApp. Ne transfère rien, ne donne pas ton code.');
 }
-// On sauvegarde la langue
-var oldToggle = toggleLang;
-toggleLang = function(){ oldToggle(); localStorage.setItem("lang", langFR?"FR":"LN"); };
-// Au chargement, si on était en Lingala, on remet en Lingala
-</script>
-
-<script>
-
-// Si ton bouton analyser existe, on l'accroche
-
-</script>
-
-<!-- MENU MODERNE STYLE FACEBOOK -->
-<style>
-#btn-menu{position:fixed;top:12px;left:12px;z-index:9999;background:#1877F2;color:#fff;border:none;width:44px;height:44px;border-radius:50%;font-size:20px;box-shadow:0 4px 12px rgba(0,0,0,.3)}
-#overlay-menu{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.5);z-index:9998;display:none}
-#drawer{position:fixed;top:0;left:-300px;width:280px;height:100%;background:#fff;z-index:9999;transition:left .3s ease;overflow-y:auto;padding:16px;box-shadow:4px 0 20px rgba(0,0,0,.3)}
-#drawer.open{left:0}
-.drawer-head{display:flex;align-items:center;gap:10px;padding-bottom:14px;border-bottom:1px solid #eee}
-.drawer-avatar{width:48px;height:48px;border-radius:50%;background:#1877F2;color:#fff;display:flex;align-items:center;justify-content:center;font-size:22px;font-weight:bold}
-.drawer-item{display:flex;align-items:center;gap:12px;padding:13px 10px;border-radius:10px;font-size:15px;font-weight:600;color:#111;cursor:pointer;border:none;background:none;width:100%;text-align:left}
-.drawer-item:active{background:#f0f2f5}
-.drawer-label{font-size:11px;color:#888;font-weight:800;margin:14px 0 4px 10px;letter-spacing:1px}
-.switch{margin-left:auto;width:46px;height:26px;background:#ccc;border-radius:20px;position:relative;transition:.3s}
-.switch.on{background:#1877F2}
-.switch:after{content:"";position:absolute;top:3px;left:3px;width:20px;height:20px;background:#fff;border-radius:50%;transition:.3s}
-.switch.on:after{left:23px}
-body.dark{background:#18191a!important;color:#fff!important}
-body.dark #drawer{background:#242526!important;color:#fff!important}
-body.dark .drawer-item{color:#fff!important}
-body.dark .drawer-item:active{background:#3a3b3c!important}
-</style>
-<button id="btn-menu" onclick="openMenu()">☰</button>
-<div id="overlay-menu" onclick="closeMenu()"></div>
-<div id="drawer">
-  <div class="drawer-head">
-    <div class="drawer-avatar">E</div>
-    <div><div style="font-weight:800;font-size:16px">Emmanuel Ngwama</div><div style="color:#888;font-size:12px">SOC KINSHASA • Fondateur</div></div>
-    <span onclick="closeMenu()" style="margin-left:auto;font-size:22px;cursor:pointer">✕</span>
-  </div>
-  <div class="drawer-label">MENU</div>
-  <button class="drawer-item" onclick="closeMenu();window.scrollTo({top:0,behavior:'smooth'})">🏠 Accueil</button>
-  <button class="drawer-item" onclick="closeMenu();document.querySelector('input').focus()">🔍 Analyser un lien</button>
-  <button class="drawer-item" onclick="closeMenu();alert('Merci ! Envoie le faux message sur WhatsApp')">🚨 Signaler une arnaque</button>
-  <button class="drawer-item" onclick="closeMenu();if(navigator.share){navigator.share({title:'SOC KINSHASA',text:'Protège Kinshasa contre les arnaques',url:location.href})}else{alert('Copie le lien : '+location.href)}">↗️ Partager l'appli</button>
-  <div class="drawer-label">PARAMÈTRES</div>
-  <button class="drawer-item" onclick="toggleDarkMenu()">🌙 Mode sombre <div id="sw-dark" class="switch"></div></button>
-  <button class="drawer-item" onclick="toggleLangMenu()">🌍 Langue <span id="txt-lang" style="margin-left:auto;color:#1877F2">Français</span></button>
-  <button class="drawer-item" onclick="closeMenu();alert('SOC KINSHASA v2.0\n100% Défensif\nProtège Kinshasa contre les faux liens')">ℹ️ À propos</button>
-  <button class="drawer-item" onclick="closeMenu();localStorage.clear();location.reload()">🔄 Réinitialiser l'appli</button>
-  <div style="text-align:center;color:#888;font-size:11px;margin-top:20px">SOC KINSHASA • 100% DEFENSIF<br>Kinshasa ne tombe pas.</div>
-</div>
-<script>
-function openMenu(){document.getElementById('drawer').classList.add('open');document.getElementById('overlay-menu').style.display='block'}
-function closeMenu(){document.getElementById('drawer').classList.remove('open');document.getElementById('overlay-menu').style.display='none'}
-function toggleDarkMenu(){
-  var isDark=document.body.classList.toggle('dark');
-  document.getElementById('sw-dark').classList.toggle('on',isDark);
-  localStorage.setItem('dark',isDark?'1':'0');
+function signaler(){
+let n=document.getElementById('sig-num').value;let m=document.getElementById('sig-msg').value;
+if(!n){alert('Mets le numéro ou lien');return;}
+window.open('https://wa.me/243992228204?text='+encodeURIComponent('🚨 SIGNALEMENT SOC\nNuméro/Lien: '+n+'\nMessage: '+m),'_blank');
 }
-if(localStorage.getItem('dark')=='1'){document.body.classList.add('dark');setTimeout(function(){var s=document.getElementById('sw-dark');if(s)s.classList.add('on')},300)}
-var langMenu='FR';
-function toggleLangMenu(){
-  langMenu=(langMenu=='FR')?'LN':'FR';
-  document.getElementById('txt-lang').textContent=(langMenu=='FR')?'Français':'Lingala';
-  // On change juste les gros titres du menu, sans toucher au reste pour ne pas faire bugger
-  alert(langMenu=='LN' ? 'Mode Lingala activé pour le menu !\nOn fera la version Lingala complète après.' : 'Mode Français activé !');
-}
-</script>
-
-<style>
-/* On enlève la barre du bas, on garde seulement le menu */
-nav, .bottom-nav, .bottom-bar, #bottom-nav, #bottom-bar { display:none !important; }
-</style>
-<script>
-// On enlève la barre du bas dès que la page s'ouvre
-function enleveBarreBas(){
-  var all = document.querySelectorAll('div, nav, footer');
-  all.forEach(function(el){
-    var txt = el.textContent || '';
-    // Si un bloc contient les 4 en même temps, c'est la barre du bas
-    if(txt.includes('Accueil') && txt.includes('Vérifier') && txt.includes('Signaler') && txt.includes('Partage')){
-      // On vérifie que c'est bien un petit bloc en bas, pas tout le body
-      if(el.children.length < 6 && el.textContent.length < 200){
-        el.style.display='none';
-        el.remove();
-      }
-    }
-  });
-  // Sécurité : on enlève aussi tout ce qui est collé en bas
-  document.querySelectorAll('[style*="position:fixed"][style*="bottom:0"], [style*="position: fixed"][style*="bottom: 0"]').forEach(function(el){
-    if((el.textContent||'').includes('Accueil')) el.remove();
-  });
-}
-document.addEventListener('DOMContentLoaded', enleveBarreBas);
-setTimeout(enleveBarreBas, 500);
-setTimeout(enleveBarreBas, 1500);
-</script>
-
-
-
-
-
-
-
-
-
-<!-- FOOTER FINAL -->
-<div style="text-align:center;padding:25px 10px 40px 10px;color:#fff"><div class="box"><h3>🚨 Signes de phishing</h3><p>• Cadeau gratuit / gagner<br>• On te demande mot de passe urgent<br>• Lien bizarre bit.ly<br>• Faute dans le nom du site</p></div><footer><b>Créé à Kinshasa par Emmanuel Ngwama 🇨🇩</b><br>WhatsApp : 0992228204 • SOC Kinshasa © 2026</footer><script>if('serviceWorker' in navigator){navigator.serviceWorker.register('sw.js')}let t=0;function parler(x){try{speechSynthesis.cancel();let u=new SpeechSynthesisUtterance(x);u.lang='fr-FR';u.rate=1.15;u.pitch=1.05;u.volume=1;let v=speechSynthesis.getVoices();let pref=v.filter(z=>z.lang.startsWith('fr'));let e=pref.find(z=>z.name.toLowerCase().includes('denise')||z.name.toLowerCase().includes('henri')||z.name.toLowerCase().includes('thomas')||z.name.toLowerCase().includes('paul'))||pref[0];if(e)u.voice=e;speechSynthesis.speak(u)}catch(e){}}function ana(u){u=u.toLowerCase().trim();let s=100,r=[],d=false;let c=['google.com','facebook.com','whatsapp.com','youtube.com','instagram.com','tiktok.com'];for(let x of c)if(u.includes(x))return{score:100,raisons:['✅ Domaine officiel connu']};if(!u.startsWith('https://')){s-=40;r.push('❌ Pas de HTTPS - dangereux');d=true}if(u.includes('bit.ly')||u.includes('tinyurl')||u.includes('t.me')){s=10;r.push('❌ Lien raccourci suspect - FAUX');d=true}if(u.includes('gratuit')||u.includes('gagner')||u.includes('cadeau')||u.includes('bonus')||u.includes('argent')){s=Math.min(s,15);r.push('❌ Mot arnaque : cadeau / gagner = FAUX');d=true}if(u.includes('login')||u.includes('verify')||u.includes('password')){s=Math.min(s,20);r.push('❌ Faux login / mot de passe');d=true}if(u.includes('urgent')||u.includes('bloque')||u.includes('suspendu')){s=Math.min(s,20);r.push('❌ Urgence - arnaque');d=true}if(d&&s>30)s=15;if(r.length==0)r.push('✅ Aucun signal suspect');return{score:s,raisons:r}}function verifier(){let u=document.getElementById('lien').value;if(!u){alert('Colle un lien !');return}let res=ana(u);t++;document.getElementById('count').textContent=t;let bar=document.getElementById('bar'),fill=document.getElementById('fill'),zone=document.getElementById('res');bar.style.display='block';zone.style.display='block';fill.style.width=res.score+'%';fill.textContent=res.score+'% '+(res.score>=60?'VRAI ✅':'FAUX ❌');fill.style.background=res.score>=60?'#00C853':'#E5002B';if(res.score>=60){zone.innerHTML='<b>Analyse :</b><br>'+res.raisons.join('<br>')+'<br><br><b>✅ Tokoos ! C’est un vrai site, tu peux continuer !</b>';setTimeout(()=>parler('Tokoos ! Excellent ! C’est un vrai site certifié ! Tu peux continuer tranquillement !'),500)}else{zone.innerHTML='<b>Analyse :</b><br>'+res.raisons.join('<br>')+'<br><br><b>❌ STOP ! Ne cliquez surtout pas, c’est un faux lien ! Danger !</b>';if(navigator.vibrate)navigator.vibrate([300,100,300,100,300]);setTimeout(()=>parler('STOP ! Attention danger ! Ne cliquez surtout pas ! C’est un faux lien ! C’est une arnaque !'),500)}}</script>
-
-
-<script>
-let b=document.getElementById('bulle');
-let dx=0, dy=0, bouge=false, startX=0, startY=0;
-function debut(x,y){ bouge=true; startX=x; startY=y; let r=b.getBoundingClientRect(); dx=x-r.left; dy=y-r.top; b.style.transition='none'; }
-function bouger(x,y){ if(!bouge) return; b.style.left=(x-dx)+'px'; b.style.top=(y-dy)+'px'; b.style.right='auto'; b.style.bottom='auto'; }
-function fin(){ bouge=false; }
-b.addEventListener('touchstart', e=>{ debut(e.touches[0].clientX, e.touches[0].clientY); }, {passive:true});
-b.addEventListener('touchmove', e=>{ bouger(e.touches[0].clientX, e.touches[0].clientY); }, {passive:true});
-b.addEventListener('touchend', e=>{
-  fin();
-  // Si c'est juste un petit tap, on partage
-  if(Math.abs(e.changedTouches[0].clientX-startX)<10 && Math.abs(e.changedTouches[0].clientY-startY)<10){
-    if(navigator.share){ navigator.share({title:'NGWAMA SHIELD',text:'Telecharge mon appli gratuite',url:location.href}) }
-    else{ window.open('https://wa.me/?text='+encodeURIComponent('Telecharge NGWAMA SHIELD ici : '+location.href)) }
-  }
-});
-b.addEventListener('mousedown', e=>{ debut(e.clientX,e.clientY); });
-document.addEventListener('mousemove', e=>{ bouger(e.clientX,e.clientY); });
-document.addEventListener('mouseup', fin);
-</script>
-<div id='bulle' style='position:fixed;bottom:20px;right:20px;width:70px;height:70px;background:#1E90FF;color:white;border-radius:50%;display:flex;flex-direction:column;align-items:center;justify-content:center;box-shadow:0 4px 15px rgba(0,0,0,0.4);z-index:99999;cursor:grab;touch-action:none;user-select:none;-webkit-user-select:none'><div style='font-size:26px;pointer-events:none'>📤</div></div>
-</body>
-</html>
+</script></body></html>
