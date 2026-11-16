@@ -37,7 +37,6 @@ footer{text-align:center;color:#666;font-size:13px;padding:12px;line-height:1.6}
 </div>
 <div style="background:#1a1a1a;padding:14px;border-radius:12px;margin-top:18px;display:flex;gap:10px;align-items:center">
 <div style="background:#00e676;width:45px;height:45px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:22px">🛡️</div>
-<div><b>Emmanuel Ngwama</b><br><span style="color:#aaa;font-size:12px">NGWAMA SHIELD - Kinshasa 🇨🇩</span></div>
 </div>
 <a href="#" onclick="fermerMenu()" style="display:block;background:#1a1a1a;color:white;text-decoration:none;padding:14px;border-radius:12px;margin-top:10px">🏠 Accueil</a>
 <a href="#lien" onclick="fermerMenu()" style="display:block;background:#1a1a1a;color:white;text-decoration:none;padding:14px;border-radius:12px;margin-top:10px">🔗 Analyser un lien</a>
@@ -46,7 +45,6 @@ footer{text-align:center;color:#666;font-size:13px;padding:12px;line-height:1.6}
 <a href="#sig-num" onclick="fermerMenu()" style="display:block;background:#d50000;color:white;text-decoration:none;padding:14px;border-radius:12px;margin-top:10px">🚨 Signaler une arnaque</a>
 <a href="https://wa.me/243992228204?text=Bonjour%20Emmanuel,%20SOS" onclick="fermerMenu()" style="display:block;background:#ff3d00;color:white;text-decoration:none;padding:14px;border-radius:12px;margin-top:10px">🆘 SOS - J'ai cliqué</a>
 <a href="https://wa.me/243992228204" style="display:block;background:#25D366;color:#000;font-weight:bold;text-decoration:none;text-align:center;padding:14px;border-radius:12px;margin-top:18px">📱 Contacter sur WhatsApp</a>
-<p style="color:#666;font-size:12px;text-align:center;margin-top:18px">NGWAMA SHIELD<br>Par Emmanuel Ngwama<br>0992228204</p>
 </div>
 <div id="fondNoir" onclick="fermerMenu()" style="display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.6);z-index:999"></div>
 <script>
@@ -56,8 +54,6 @@ function fermerMenu(){document.getElementById('menuFB').style.display='none';doc
 
 
 
-<header><h1>🛡️ NGWAMA SHIELD</h1><p>Max Services - 100% Défensif - Kinshasa</p><p><b>Par Emmanuel Ngwama</b></p></header>
-<div class="contact">WhatsApp : 0992228204<br><a href="https://wa.me/243992228204?text=Bonjour%20Emmanuel,%20je%20viens%20de%20NGWAMA SHIELD%20Kinshasa">📱 Contacter sur WhatsApp</a></div>
 
 <div class="alerte">⚠️ <b>ALERTE DU JOUR À KINSHASA</b><br>Faux message "Orange Money" qui circule : "Vous avez gagné 50$". Ne donnez JAMAIS votre code. C'est une arnaque !</div>
 
@@ -72,7 +68,6 @@ function fermerMenu(){document.getElementById('menuFB').style.display='none';doc
 <input id="lien" placeholder="Ex: https://google.com"><button onclick="verifierLien()">🔍 ANALYSER LE LIEN</button><div id="res-lien" class="result"></div></div>
 
 <div class="card"><h2>📞 2. Vérifier un numéro suspect</h2><p>Tu as reçu un message bizarre ? Colle le numéro ici.</p>
-<input id="num" placeholder="Ex: 0992228204 ou +243..."><button onclick="verifierNum()" class="btn2">📞 VÉRIFIER LE NUMÉRO</button><div id="res-num" class="result"></div></div>
 
 <div class="card"><h2>🖼️ 3. Vérifier une image / capture</h2><p>On t'a envoyé une image "Gouvernement donne l'argent" ?</p>
 <select id="img-type"><option>Image dit : Tu as gagné de l'argent</option><option>Image dit : Gouvernement / ONG donne de l'argent</option><option>Image : Faux reçu Orange Money</option><option>Image : Faux compte d'une star / pasteur</option></select>
@@ -90,7 +85,6 @@ function fermerMenu(){document.getElementById('menuFB').style.display='none';doc
 
 <div class="card"><h2>🚨 Signes de phishing</h2><p>• Cadeau gratuit / gagner<br>• On te demande mot de passe urgent<br>• Lien bizarre bit.ly<br>• Faute dans le nom du site</p></div>
 
-<footer>Créé à Kinshasa par Emmanuel Ngwama 🇨🇩<br>WhatsApp : 0992228204</footer>
 <script>
 function show(id,html){let e=document.getElementById(id);e.style.display='block';e.innerHTML=html;}
 function verifierLien(){
@@ -116,7 +110,14 @@ let n=document.getElementById('sig-num').value;let m=document.getElementById('si
 if(!n){alert('Mets le numéro ou lien');return;}
 window.open('https://wa.me/243992228204?text='+encodeURIComponent('🚨 SIGNALEMENT NGWAMA SHIELD\nNuméro/Lien: '+n+'\nMessage: '+m),'_blank');
 }
-</script></body></html>
+</script>
+<div style="text-align:center;padding:20px;color:#888;font-size:14px;border-top:1px solid #333;margin-top:20px">
+Créé à Kinshasa par Emmanuel Ngwama 🇨🇩<br>
+WhatsApp : <a href="https://wa.me/243992228204" style="color:#25D366;text-decoration:none;font-weight:bold">0992228204</a><br>
+<span style="font-size:12px">NGWAMA SHIELD - Protège Kinshasa</span>
+</div>
+</body>
+</html>
 <div style="background:#1a0000;border:2px solid #ff3d00;border-radius:16px;padding:18px;margin:14px">
 <h2 style="text-align:center;color:#ff5252">😱 MON COMPTE A ETE PIRATE ?</h2>
 <p style="text-align:center;color:#fff">Choisis ton compte :</p>
