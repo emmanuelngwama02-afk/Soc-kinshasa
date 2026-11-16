@@ -372,5 +372,34 @@ document.addEventListener('DOMContentLoaded', ordreFinal);
 setTimeout(ordreFinal, 600);
 setTimeout(ordreFinal, 2000);
 </script>
+
+<script>
+function footerToutALaFin(){
+  // 1. On cache TOUS les anciens "Créé à Kinshasa"
+  document.querySelectorAll('div, p, footer').forEach(function(el){
+    if(el.textContent.includes('Créé à Kinshasa par Emmanuel') && el.textContent.length < 600){
+      if(el.id !== 'footer-final-vrai'){
+        el.style.display = 'none';
+      }
+    }
+  });
+  // 2. On crée un NOUVEAU footer, tout à la fin
+  var vieux = document.getElementById('footer-final-vrai');
+  if(vieux) vieux.remove();
+  var f = document.createElement('div');
+  f.id = 'footer-final-vrai';
+  f.style.textAlign = 'center';
+  f.style.padding = '25px 10px 40px 10px';
+  f.style.color = '#fff';
+  f.innerHTML = '<div style="font-weight:800;font-size:14px">Créé à Kinshasa par Emmanuel Ngwama 🇨🇩</div><div style="color:#aaa;font-size:12px;margin-top:4px">WhatsApp : 0992228204 • SOC Kinshasa © 2026</div>';
+  // On le met après TOUT, même après Signes de phishing
+  var drawer = document.getElementById('drawer');
+  if(drawer) document.body.insertBefore(f, drawer);
+  else document.body.appendChild(f);
+}
+document.addEventListener('DOMContentLoaded', footerToutALaFin);
+setTimeout(footerToutALaFin, 500);
+setTimeout(footerToutALaFin, 1500);
+</script>
 </body>
 </html>
