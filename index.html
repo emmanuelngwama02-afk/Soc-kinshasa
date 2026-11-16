@@ -236,6 +236,7 @@ var dico=[
 ["Élevé","Monene"],
 ["Moyen","Ya katikati"]
 ];
+
 function tradNode(node){
   if(node.nodeType==3){
     var txt=node.nodeValue;
@@ -243,10 +244,12 @@ function tradNode(node){
       if(!langFR && txt.includes(dico[i][0])){ node.nodeValue=txt.replace(dico[i][0], dico[i][1]); break; }
       if(langFR && txt.includes(dico[i][1]) && dico[i][0]!=dico[i][1]){ node.nodeValue=txt.replace(dico[i][1], dico[i][0]); break; }
     }
-  } else if(node.nodeType==1 && node.tagName!="SCRIPT" && node.tagName!="STYLE" && node.id!="btn-lang" && node.id!="btn-dark"){
-    for(var c=0;c<node.childNodes.length;c++){ tradNode(node.childNodes[c]); }
+  } else if(node.nodeType==1 && node.tagName!="SCRIPT" && node.tagName!="STYLE"){
+    var kids = Array.from(node.childNodes);
+    for(var c=0;c<kids.length;c++){ tradNode(kids[c]); }
   }
 }
+
 function toggleLang(){
   langFR=!langFR;
   document.getElementById("btn-lang").textContent=langFR?"🌍 FR / LINGALA":"🌍 LINGALA / FR";
@@ -257,11 +260,7 @@ function toggleLang(){
 </script>
 
 <script>
-// Surveillant : dès qu'un nouveau résultat apparait, on le traduit en Lingala si on est en Lingala
-var obs = new MutationObserver(function(){
-  if(!langFR){ tradNode(document.body); }
-});
-obs.observe(document.body, {childList:true, subtree:true, characterData:true});
+
 function alertLingala(msgFR, msgLN){
   alert(langFR ? msgFR : msgLN);
 }
@@ -270,6 +269,18 @@ var oldToggle = toggleLang;
 toggleLang = function(){ oldToggle(); localStorage.setItem("lang", langFR?"FR":"LN"); };
 // Au chargement, si on était en Lingala, on remet en Lingala
 if(localStorage.getItem("lang")=="LN" && langFR){ setTimeout(function(){ toggleLang(); }, 800); }
+</script>
+
+<script>
+function tradApresAnalyse(){
+  if(!langFR){ setTimeout(function(){ tradNode(document.body); }, 500); }
+}
+// Si ton bouton analyser existe, on l'accroche
+document.addEventListener("click", function(e){
+  if(e.target && (e.target.textContent.includes("TALELA") || e.target.textContent.includes("ANALYSER"))){
+    tradApresAnalyse();
+  }
+});
 </script>
 </body>
 </html>
